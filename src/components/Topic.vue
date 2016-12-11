@@ -1,20 +1,20 @@
 <template>
   <div>
-  {{title}}:{{loginname}}
+
   </div>
 </template>
 
 <script>
+  export default {
+    name: 'topic',
+    data() {
+      return {};
+    },
+    methods: {
+      getTopic() {
+        let params = this.$route.params;
 
-export default {
-  name: 'topic',
-  props: {
-    title: String,
-    loginname: String,
-  },
-  methods: {
-
-  },
-}
+      }
+    }
+  };
 </script>
-

@@ -1,17 +1,18 @@
 <template>
   <div>
     <div v-for="topic in topics">
-      <topic
+      <topic-list-item
         :title="topic.title"
-        :loginname="topic.author.loginname">
+        :author="topic.author">
 
-      </topic>
+      </topic-list-item>
     </div>
   </div>
 </template>
 
 <script>
-import Topic from './Topic'
+import {cnode} from '../api.js';
+import TopicListItem from './TopicListItem'
 
 const CNODE = 'https://cnodejs.org/api/v1';
 const API = {
@@ -28,7 +29,6 @@ export default {
   name: 'topic-list',
   data() {
     this.getTopics().then(data => {
-      console.log(data);
       this.$data.topics = data;
     });
     return {
@@ -37,18 +37,11 @@ export default {
   },
   methods: {
     getTopics() {
-      let topicsApi = CNODE.concat(API.topics.url);
-      return fetch(topicsApi).then(response => {
-        if (response.ok) {
-          return response.json();
-        }
-      }).then(json => {
-        return json.data;
-      });;
+      return cnode('topic_home');
     },
   },
   components: {
-    Topic
+    TopicListItem
   }
 }
 </script>
