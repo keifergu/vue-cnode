@@ -2,6 +2,8 @@
   <div>
     <div v-for="topic in topics">
       <topic-list-item
+        :topicId="topic.id"
+        :top="topic.top"
         :title="topic.title"
         :author="topic.author">
 
@@ -11,29 +13,20 @@
 </template>
 
 <script>
-import {cnode} from '../api.js';
+import cnode from '../utils/api.js';
 import TopicListItem from './TopicListItem'
-
-const CNODE = 'https://cnodejs.org/api/v1';
-const API = {
-  topics: {
-    url: '/topics',
-    params: {
-      page: 1,
-      limit: 10,
-    },
-  },
-};
 
 export default {
   name: 'topic-list',
   data() {
+    return {
+      'topics': {},
+    };
+  },
+  created() {
     this.getTopics().then(data => {
       this.$data.topics = data;
     });
-    return {
-      'topics': null,
-    };
   },
   methods: {
     getTopics() {

@@ -12,7 +12,7 @@ export default [
         component: TopicList,
       },
       {
-        path: '/topic',
+        path: '/topic/:topicId',
         component: Topic,
       },
     ]

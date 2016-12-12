@@ -1,7 +1,12 @@
 <template>
   <Row>
-    <i-col span="18" class="title">{{title}}</i-col>
-    <i-col span="6" class="author">{{author.loginname}}</i-col>
+    <i-col span="14" class="title">
+      {{top?'[置顶] ':''}}
+      <router-link :to="topicPath">
+        {{title}}
+      </router-link>
+    </i-col>
+    <i-col span="10" class="author">{{author.loginname}}</i-col>
   </Row>
 </template>
 
@@ -10,13 +15,19 @@
 export default {
   name: 'topic-list-item',
   props: {
+    top: Boolean,
     title: String,
     author: Object,
+    topicId: String,
   },
   methods: {
-
   },
-}
+  computed: {
+    topicPath() {
+      return '/topic/' + this.topicId;
+    },
+  },
+};
 </script>
 
 <style scoped>

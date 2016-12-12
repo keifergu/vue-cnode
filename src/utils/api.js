@@ -11,7 +11,7 @@ const apiConfig = {
   },
   topic_details: {
     method: 'GET',
-    path: (id) => `/topics/${id}`,
+    path: (id) => `/topic/${id}`,
     params: {},
   },
 }
@@ -27,7 +27,7 @@ const apiConfig = {
  * @param  {Array}  pathParams   路径参数，按照顺序的数组
  * @return {Promise}             返回一个Promise对象，结束后会得到具体的数据
  */
-export function cnode(
+export default function cnode(
   api_string = '',
   {
     data = {},
