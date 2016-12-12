@@ -33,3 +33,14 @@ export function paramsOverwrite(params = {}, new_params = {}) {
 
   return params;
 }
+
+/**
+ * 判断一个对象是否为空的方法
+ * @param  {Object}  args 需要进行判断的对象
+ * @return {Boolean}      空则返回true，不为空则返回false
+ */
+export function isEmptyObject(args) {
+  for(let t in args)
+    return !1;
+  return !0;
+}
