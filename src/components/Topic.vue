@@ -11,7 +11,7 @@
         <!-- <img :src="topic.author.avatar_url"> -->
       </div>
       <div v-html="topic.content"></div>
-
+      Reply:
       <div v-for="reply in topic.replies">
         <div v-html="reply.content"></div>
       </div>

@@ -1,13 +1,13 @@
 <template>
-  <Row>
-    <i-col span="14" class="title">
+  <div>
+    <div span="14" class="title">
       {{top?'[置顶] ':''}}
       <router-link :to="topicPath">
         {{title}}
       </router-link>
-    </i-col>
-    <i-col span="10" class="author">{{author.loginname}}</i-col>
-  </Row>
+    </div>
+    <div span="10" class="author">{{author.loginname}}</div>
+  </div>
 </template>
 
 <script>
