@@ -1,19 +1,15 @@
 <template>
-  <div id="app">
-    <topic-list></topic-list>
+  <div>
+    <p>CNode Form</p>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import TopicList from './components/TopicList'
-
 export default {
   name: 'app',
   data() {
     return {};
   },
-  components: {
-    TopicList
-  }
 }
 </script>

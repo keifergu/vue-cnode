@@ -1,4 +1,4 @@
-import {paramsOverwrite, objectToUrl, isEmptyObject} from './utils/utils.js';
+import {paramsOverwrite, objectToUrl, isEmptyObject} from './utils.js';
 
 const CNODE = 'https://cnodejs.org/api/v1';
 const apiConfig = {
@@ -50,7 +50,7 @@ export function cnode(
       body: formData,
     }
   } else {
-    if (isEmptyObject(data)) {
+    if (!isEmptyObject(data)) {
       console.error("GET can't have the data");
     }
     fetchConf = {
