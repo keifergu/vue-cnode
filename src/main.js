@@ -1,13 +1,13 @@
 import Vue from 'vue'
-import iView from 'iview'
+import MuseUI from 'muse-ui'
 import VueRouter from 'vue-router'
 
 import routes from './config/routes'
 
-import 'iview/dist/styles/iview.css'
+import 'muse-ui/dist/muse-ui.css'
 
 Vue.use(VueRouter);
-Vue.use(iView);
+Vue.use(MuseUI);
 
 Vue.config.devtools = true;
 
