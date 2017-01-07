@@ -3,17 +3,25 @@
     <div v-if="loading">
       loading...
     </div>
-    <div v-else>
-      {{topic.title}}
-      <div>
-        <p>{{topic.author.loginname}}</p>
-        <p>{{topic.create_at}}</p>
+    <div v-else class="content">
+      <div class="title">
+        {{topic.title}}
+      </div>
+      <div class="topic-info">
+        <p class="name">{{topic.author.loginname + "创建于"}}</p>
+        <p class="time">{{topic.create_at}}</p>
         <!-- <img :src="topic.author.avatar_url"> -->
       </div>
+      <mu-divider />
       <div v-html="topic.content"></div>
-      Reply:
-      <div v-for="reply in topic.replies">
-        <div v-html="reply.content"></div>
+      <mu-divider />
+      <div class="reply">
+        <div>共{{topic.reply_count}}条回复：</div>
+        <div v-for="reply in topic.replies">
+          {{reply.author.loginname}}:
+          <div v-html="reply.content"></div>
+          <mu-divider />
+        </div>
       </div>
     </div>
   </div>
@@ -47,3 +55,19 @@
     }
   };
 </script>
+
+<style scoped>
+  .title {
+    font-size: 19px;
+  }
+  .topic-info {
+    width: 100%;
+    float: left;
+  }
+  .name {
+    float: left;
+  }
+  .time {
+    float: left;
+  }
+</style>

@@ -8,7 +8,7 @@
         :author="topic.author"
         class="topic-item"
       />
-      <mu-divider/>
+      <mu-divider />
     </div>
   </div>
 </template>
