@@ -51,4 +51,7 @@ export default {
   margin-bottom: 0;
   margin-left: 2px;
 }
+a {
+  color: black;
+}
 </style>

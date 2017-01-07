@@ -1,5 +1,5 @@
 <template>
-  <mu-flexbox>
+  <mu-flexbox class="item">
     <mu-flexbox-item grow="5" class="title">
       {{top?'[置顶] ':''}}
       <router-link :to="topicPath">
@@ -33,8 +33,16 @@ export default {
 </script>
 
 <style scoped>
-  .title {
-    color: #464c5b;
-    font-size: 16px;
-  }
+.item {
+  height: 50px;
+}
+.title {
+  font-size: 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+a {
+  color: black;
+}
 </style>

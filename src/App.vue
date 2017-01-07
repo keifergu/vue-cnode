@@ -37,8 +37,11 @@ export default {
 </script>
 
 <style scoped>
-  .container {
-    margin-left: 2px;
-    margin-right: 2px;
-  }
+.container {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+a {
+  color: black;
+}
 </style>
