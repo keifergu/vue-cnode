@@ -8,6 +8,7 @@
         :author="topic.author"
         class="topic-item"
       />
+      <mu-divider/>
     </div>
   </div>
 </template>
@@ -41,6 +42,7 @@ export default {
 
 <style scoped>
   .topic-item {
-    margin-top: 10px;
+    margin-bottom: 0;
+    margin-left: 2px;
   }
 </style>

@@ -1,17 +1,15 @@
 <template>
-  <mu-paper :zDepth="1">
-    <mu-flexbox>
-      <mu-flexbox-item grow="5" class="title">
-        {{top?'[置顶] ':''}}
-        <router-link :to="topicPath">
-          {{title}}
-        </router-link>
-      </mu-flexbox-item>
-      <mu-flexbox-item grow="1" class="author">
-        {{author.loginname}}
-      </mu-flexbox-item>
-    </mu-flexbox>
-  </mu-paper>
+  <mu-flexbox>
+    <mu-flexbox-item grow="5" class="title">
+      {{top?'[置顶] ':''}}
+      <router-link :to="topicPath">
+        {{title}}
+      </router-link>
+    </mu-flexbox-item>
+    <mu-flexbox-item grow="1" class="author">
+      {{author.loginname}}
+    </mu-flexbox-item>
+  </mu-flexbox>
 </template>
 
 <script>

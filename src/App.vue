@@ -8,7 +8,7 @@
         <router-link to="/">首页</router-link>
       </mu-list-item>
     </mu-drawer>
-    <mu-row gutter>
+    <mu-row gutter class="container">
       <mu-col width="0" tablet="10" desktop="20" />
       <mu-col width="100" tablet="80" desktop="60">
         <router-view></router-view>
@@ -35,3 +35,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .container {
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+</style>
