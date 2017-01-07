@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <mu-paper class="container">
     <div v-for="topic in topics">
       <topic-list-item
         :topicId="topic.id"
@@ -10,7 +10,7 @@
       />
       <mu-divider />
     </div>
-  </div>
+  </mu-paper>
 </template>
 
 <script>
@@ -41,8 +41,14 @@ export default {
 </script>
 
 <style scoped>
-  .topic-item {
-    margin-bottom: 0;
-    margin-left: 2px;
-  }
+.container {
+  margin-top: 5px;
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.topic-item {
+  margin-bottom: 0;
+  margin-left: 2px;
+}
 </style>
