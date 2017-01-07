@@ -5,9 +5,9 @@
         :topicId="topic.id"
         :top="topic.top"
         :title="topic.title"
-        :author="topic.author">
-
-      </topic-list-item>
+        :author="topic.author"
+        class="topic-item"
+      />
     </div>
   </div>
 </template>
@@ -39,3 +39,8 @@ export default {
 }
 </script>
 
+<style scoped>
+  .topic-item {
+    margin-top: 10px;
+  }
+</style>

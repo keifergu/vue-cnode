@@ -8,7 +8,13 @@
         <router-link to="/">首页</router-link>
       </mu-list-item>
     </mu-drawer>
-    <router-view></router-view>
+    <mu-row gutter>
+      <mu-col width="0" tablet="10" desktop="20" />
+      <mu-col width="100" tablet="80" desktop="60">
+        <router-view></router-view>
+      </mu-col>
+      <mu-col width="0" tablet="10" desktop="20" />
+    </mu-row>
   </div>
 </template>
 
