@@ -2,10 +2,14 @@
   <mu-paper class="container">
     <div v-for="topic in topics">
       <topic-list-item
-        :topicId="topic.id"
         :top="topic.top"
+        :good="topic.good"
+        :topicId="topic.id"
         :title="topic.title"
         :author="topic.author"
+        :replyCount="topic.reply_count"
+        :visitCount="topic.visit_count"
+        :lastReplyTime="topic.last_reply_at"
         class="topic-item"
       />
       <mu-divider />
@@ -26,6 +30,7 @@ export default {
   },
   created() {
     this.getTopics().then(data => {
+      console.log(data)
       this.$data.topics = data;
     });
   },
@@ -33,6 +38,9 @@ export default {
     getTopics() {
       return cnode('topic_home');
     },
+  },
+  computed: {
+
   },
   components: {
     TopicListItem
@@ -42,14 +50,7 @@ export default {
 
 <style scoped>
 .container {
-  margin-top: 5px;
-  padding-top: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-}
-.topic-item {
-  margin-bottom: 0;
-  margin-left: 2px;
+
 }
 a {
   color: black;

@@ -44,3 +44,28 @@ export function isEmptyObject(args) {
     return !1;
   return !0;
 }
+
+/**
+ * 将毫秒转换为 xx小时 ， xx分钟的格式
+ * 根据值的大小，返回最接近的单位
+ * @param  {Number} countedMsec 需要转换的毫秒数
+ * @return {[type]}             返回值，类似20小时，2分钟
+ */
+export function toRelativeTime(countedMsec) {
+  countedMsec = countedMsec / 1000;
+  var dict = [
+    ['31536000','年'],
+    ['2592000','月'],
+    ['604800','星期'],
+    ['86400','天'],
+    ['3600','小时'],
+    ['60','分钟'],
+    ['1','秒']
+  ]
+  for(let i = 0; i < 7; i++) {
+    var unitMesc = dict[i][0];
+    if (countedMsec > unitMesc) {
+      return Math.floor(countedMsec / unitMesc) + dict[i][1];
+    };
+  };
+};

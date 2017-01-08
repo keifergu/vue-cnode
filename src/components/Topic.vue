@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="container">
     <div v-if="loading">
       loading...
     </div>
-    <div v-else class="container">
+    <div v-else>
       <!-- 文章内容 -->
       <mu-paper>
         <div class="content">
