@@ -59,8 +59,8 @@
         let topicId = this.$route.params.topicId;
         return cnode('topic_details',{
           pathParams: [topicId]
-        })
-      }
+        });
+      },
     }
   };
 </script>
@@ -76,7 +76,6 @@
     padding-top: 5px;
     padding-left: 8px;
     padding-right: 8px;
-    word-wrap: break-word;
     word-break: break-all;
   }
   .title {

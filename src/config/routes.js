@@ -1,6 +1,7 @@
 import App from '../App';
 import Topic from '../components/Topic';
 import TopicList from '../components/TopicList';
+import User from '../components/User';
 
 export default [
   {
@@ -15,6 +16,10 @@ export default [
         path: '/topic/:topicId',
         component: Topic,
       },
+      {
+        path: '/user/:loginname',
+        component: User,
+      }
     ]
   }
 ]
