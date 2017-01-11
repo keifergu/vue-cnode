@@ -65,7 +65,7 @@ export function toRelativeTime(countedMsec) {
   for(let i = 0; i < 7; i++) {
     var unitMesc = dict[i][0];
     if (countedMsec > unitMesc) {
-      return Math.floor(countedMsec / unitMesc) + dict[i][1];
+      return Math.floor(countedMsec / unitMesc) + ' ' + dict[i][1];
     };
   };
 };

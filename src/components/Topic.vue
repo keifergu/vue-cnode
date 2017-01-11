@@ -5,31 +5,30 @@
     </div>
     <div v-else>
       <!-- 文章内容 -->
-      <mu-paper>
-        <div class="content">
-          <div class="title">
-            {{topic.title}}
-          </div>
-          <div class="topic-info">
-            <p class="name">{{topic.author.loginname + "创建于"}}</p>
-            <p class="time">{{topic.create_at}}</p>
-            <!-- <img :src="topic.author.avatar_url"> -->
-          </div>
-          <mu-divider />
-          <div>
-            <div v-html="topic.content">
-          </div>
+      <mu-paper class="content">
+        <div class="title">
+          {{topic.title}}
+        </div>
+        <div class="topic-info">
+          <p class="time">发布 {{createdDate}}前</p>
+          <p class="name">作者 {{topic.author.loginname}}</p>
+          <!-- <img :src="topic.author.avatar_url"> -->
+        </div>
+        <mu-divider />
+        <div>
+          <div v-html="topic.content">
         </div>
       </mu-paper>
       <!-- 回复 -->
-      <mu-paper>
-        <div class="content">
-          <div>共{{topic.reply_count}}条回复：</div>
-          <div v-for="reply in topic.replies">
-            {{reply.author.loginname}}:
-            <div v-html="reply.content"></div>
-            <mu-divider />
-          </div>
+      <mu-paper class="reply">
+        <div>共{{topic.reply_count}}条回复：</div>
+        <div v-for="reply in topic.replies">
+          <topic-reply
+            :author="reply.author"
+            :content="reply.content"
+            :replyTime="reply.create_at"
+          />
+          <mu-divider/>
         </div>
       </mu-paper>
     </div>
@@ -38,6 +37,8 @@
 
 <script>
   import cnode from '../utils/api';
+  import TopicReply from './TopicReply';
+  import { toRelativeTime } from '../utils/utils';
 
   export default {
     name: 'topic',
@@ -61,31 +62,42 @@
           pathParams: [topicId]
         });
       },
-    }
+    },
+    computed: {
+      createdDate() {
+        let mesc = new Date() - new Date(this.topic.create_at);
+        return toRelativeTime(mesc);
+      },
+    },
+    components: { TopicReply }
   };
 </script>
 
 <style scoped>
   .container {
-    margin-top: 4px;
-    margin-left: 4px;
-    margin-right: 4px;
-    margin-bottom: 5px;
+    margin: ;
   }
   .content {
-    padding-top: 5px;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding: 10px;
     word-break: break-all;
+  }
+  .reply {
+    margin-top: 10px;
+    padding: 10px;
+    top: 5px;
   }
   .title {
     font-size: 19px;
   }
   .topic-info {
+    color: #616161;
+    font-size: 14px;
     width: 100%;
     float: left;
+    display: block;
   }
   .name {
+    margin-left: 5px;
     float: left;
   }
   .time {

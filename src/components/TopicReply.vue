@@ -1,29 +1,56 @@
 <template>
-  <mu-paper class="container">
-    <div v-for="reply in replies">
-      <div class="avatar"></div>
+  <div class="container">
+    <div class="title">
+      <mu-avatar :src="author.avatar_url" class="avatar"/>
+      <div class="name">{{author.loginname}}</div>
+      <div class="time">{{replyDate}}前</div>
     </div>
-  </mu-paper>
+    <div class="content" v-html="content"></div>
+  </div>
 </template>
 
 <script>
+import { toRelativeTime } from '../utils/utils';
 
 export default {
   name: 'topic-reply',
   props: {
-    replies: Array
+    author: Object,
+    content: String,
+    replyTime: String
   },
   computed: {
-
+    replyDate() {
+      let mesc = new Date() - new Date(this.replyTime);
+      return toRelativeTime(mesc);
+    },
   },
-  components: {
-
-  }
 }
 </script>
 
 <style scoped>
 .container {
 
+}
+.title {
+  height: 40px;
+  display: block;
+}
+.avatar {
+  display: inline-block;
+  float: left;
+}
+.name {
+  margin: 10px 8px;
+  font-size: 15px;
+  display: inline-block;
+}
+.time {
+  color: #424242;
+  font-size: 12px;
+  display: inline-block;
+}
+.content {
+  display: block;
 }
 </style>
