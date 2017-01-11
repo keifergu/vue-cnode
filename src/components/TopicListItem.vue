@@ -1,8 +1,8 @@
 <template>
   <mu-flexbox class="container">
-    <mu-flexbox-item grow="1" class="author">
+    <div class="author">
       <mu-avatar :src="author.avatar_url"/>
-    </mu-flexbox-item>
+    </div>
     <mu-flexbox-item grow="8" class="title">
       <div class="topic-title">
         <div class="topic-label" v-show="top">
@@ -60,9 +60,6 @@ export default {
   height: 50px;
   margin-left: 5px;
   padding-right: 15px;
-}
-.title {
-
 }
 .topic-label {
   display: inline-block;

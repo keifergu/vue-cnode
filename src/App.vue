@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mu-appbar title="CNode.js中文社区" :zDepth="5">
+    <mu-appbar class="appbar" title="CNode社区" :zDepth="5">
       <mu-icon-button icon="menu" slot="left" @click="toggle()"/>
     </mu-appbar>
     <mu-drawer :open="open" :docked="docked" @close="toggle()">
@@ -38,9 +38,11 @@ export default {
 
 <style scoped>
 .container {
-  margin-top: 5px;
-  margin-left: 2px;
-  margin-right: 2px;
+  margin: 35px 2px 2px 2px;
+}
+.appbar {
+  position: fixed;
+  top: 0px;
 }
 a {
   color: black;
