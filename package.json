@@ -12,6 +12,7 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
+    "github-markdown-css": "^2.4.1",
     "keycode": "^2.1.7",
     "muse-ui": "^2.0.0-rc.1",
     "vue": "^2.1.4",

@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import routes from './config/routes'
 
 import 'muse-ui/dist/muse-ui.css'
+import './utils/markdown.css'
 
 Vue.use(VueRouter);
 Vue.use(MuseUI);
