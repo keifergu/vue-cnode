@@ -30,9 +30,10 @@ export default {
 
 <style scoped>
 .container {
-
+  margin: 0 10px 0 10px;
 }
 .title {
+  margin-top: 5px;
   height: 40px;
   display: block;
 }
@@ -46,7 +47,7 @@ export default {
   display: inline-block;
 }
 .time {
-  color: #424242;
+  color: #757575;
   font-size: 12px;
   display: inline-block;
 }

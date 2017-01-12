@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mu-appbar class="appbar" title="CNode社区" :zDepth="5">
+    <mu-appbar class="appbar" title="CNode社区" :zDepth="1">
       <mu-icon-button icon="menu" slot="left" @click="toggle()"/>
     </mu-appbar>
     <mu-drawer :open="open" :docked="docked" @close="toggle()">
@@ -38,11 +38,12 @@ export default {
 
 <style scoped>
 .container {
-  margin: 35px 2px 2px 2px;
+  margin: 29px 2px 2px 2px;
 }
 .appbar {
   position: fixed;
   top: 0px;
+  height: 55px;
 }
 a {
   color: black;

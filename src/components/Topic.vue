@@ -21,7 +21,8 @@
       </mu-paper>
       <!-- 回复 -->
       <mu-paper class="reply">
-        <div>共{{topic.reply_count}}条回复：</div>
+        <div class="reply-title">共{{topic.reply_count}}条回复：</div>
+        <mu-divider/>
         <div v-for="reply in topic.replies">
           <topic-reply
             :author="reply.author"
@@ -83,8 +84,11 @@
   }
   .reply {
     margin-top: 10px;
-    padding: 10px;
+    padding-top: 10px;
     top: 5px;
+  }
+  .reply-title {
+    margin-left: 10px;
   }
   .title {
     font-size: 19px;
