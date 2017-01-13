@@ -1,15 +1,13 @@
-# The FROM instruction sets the Base Image for subsequent instructions.
-# Using Nginx as Base Image
+# 使用 Nginx 来发布运行程序
 FROM nginx:1.9
-MAINTAINER Golfen Guo <golfen.guo@daocloud.io>
+MAINTAINER Keifer.Gu <keifergu@gmail.com>
 
-# The RUN instruction will execute any commands
-# Adding HelloWorld page into Nginx server
-COPY ./dist /usr/share/nginx/html/
+# 我们首先使用 ./build/Dockerfile.build 去编译构建一个生产版本的代码包，然后使用该 Docker 去运行程序
+# 提取代码需在 Daocloud 服务中定义
+# 复制构建出的代码到容器内
+COPY /app/dist /usr/share/nginx/html/
 
-# The EXPOSE instruction informs Docker that the container listens on the specified network ports at runtime
 EXPOSE 80
 
-# The CMD instruction provides default execution command for an container
 # Start Nginx and keep it from running background
 CMD ["nginx", "-g", "daemon off;"]
