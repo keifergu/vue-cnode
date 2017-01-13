@@ -10,12 +10,12 @@
           {{topic.title}}
         </div>
         <div class="topic-info">
-          <p class="time">发布 {{createdDate}}前</p>
-          <p class="name">作者 {{topic.author.loginname}}</p>
+          <span class="time">- 发布 {{createdDate}}前</span>
+          <span class="name">- 作者 {{topic.author.loginname}}</span>
           <!-- <img :src="topic.author.avatar_url"> -->
         </div>
         <mu-divider />
-        <div>
+        <div class="topic-content">
           <div v-html="topic.content">
         </div>
       </mu-paper>
@@ -82,6 +82,9 @@
     padding: 10px;
     word-break: break-all;
   }
+  .topic-content {
+    margin-top: 10px;
+  }
   .reply {
     margin-top: 10px;
     padding-top: 10px;
@@ -91,20 +94,13 @@
     margin-left: 10px;
   }
   .title {
-    font-size: 19px;
+    font-size: 20px;
   }
   .topic-info {
     color: #616161;
-    font-size: 14px;
-    width: 100%;
-    float: left;
-    display: block;
+    font-size: 12px;
+    display: inline-block;
   }
-  .name {
-    margin-left: 5px;
-    float: left;
-  }
-  .time {
-    float: left;
+  .topic-info li {
   }
 </style>
