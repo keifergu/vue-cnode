@@ -8,7 +8,6 @@ build:
       cache: true
     extract:
       - /app/dist
-      - /app/config/nginx.conf
     package:
       dockerfile_path: Dockerfile.sec
       build_dir: /
