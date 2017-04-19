@@ -5,16 +5,16 @@
     </div>
     <mu-flexbox-item grow="8" class="title">
       <div class="topic-title">
-        <div class="topic-label" v-show="top">
+        <div class="topic-label" v-show="t.top">
           置顶
         </div>
         <router-link :to="topicPath">
-          {{title}}
+          {{t.title}}
         </router-link>
       </div>
       <div class="sub-title">
         <div class="reply-count">
-          {{replyCount + "/" + visitCount}}
+          {{t.reply_count + "/" + t.visit_count}}
         </div>
         <div class="reply-date">
           {{lastReplyDate}}前
@@ -31,28 +31,24 @@ import { toRelativeTime } from '../utils';
 export default {
   name: 'topic-list-item',
   props: {
-    top: Boolean,
-    good: Boolean,
-    title: String,
-    author: String,
     topicId: String,
-    replyCount: Number,
-    visitCount: Number,
-    lastReplyTime: String,
   },
   methods: {
   },
   computed: {
+    t() {
+      return this.$store.state.topics[this.topicId]
+    },
     // 返回话题的链接
     authorInfo(){
-      return this.$store.state.authors[this.author]
+      return this.$store.state.authors[this.t.author]
     },
     topicPath() {
       return '/topic/' + this.topicId;
     },
     // 返回最后一次回复的时间，格式为 xx小时 或 xx分钟
     lastReplyDate() {
-      let mesc = new Date() - new Date(this.lastReplyTime);
+      let mesc = new Date() - new Date(this.t.last_reply_at);
       return toRelativeTime(mesc);
     }
   },

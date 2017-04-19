@@ -59,8 +59,11 @@
     },
     computed: {
       ...mapState({
-        topic: state => state.topic[this.$route.params.topicId]
+
       }),
+      topic() {
+        return this.$store.state.topics[this.$route.params.topicId]
+      },
       createdDate() {
         let mesc = new Date() - new Date(this.topic.create_at);
         return toRelativeTime(mesc);

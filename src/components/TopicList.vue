@@ -2,14 +2,7 @@
   <mu-paper class="container">
     <div v-for="topic in topics">
       <topic-list-item
-        :top="topic.top"
-        :good="topic.good"
         :topicId="topic.id"
-        :title="topic.title"
-        :author="topic.author"
-        :replyCount="topic.reply_count"
-        :visitCount="topic.visit_count"
-        :lastReplyTime="topic.last_reply_at"
         class="topic-item"
       />
       <mu-divider />

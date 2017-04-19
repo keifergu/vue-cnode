@@ -17,7 +17,6 @@ const store = new Vuex.Store({
   },
   mutations: {
     fetchTopicListSuccess (state, payload) {
-      console.log(payload)
       var data = payload.map(topic => {
         return {
           ...topic,
@@ -28,17 +27,14 @@ const store = new Vuex.Store({
         }
       })
       const normalizedData = normalize(data, [topic]);
-      console.log(normalizedData)
       state.topics = normalizedData.entities.topics
       state.authors = normalizedData.entities.authors
-      console.log(state)
     },
     fetchTopicListFailed(state, error) {
       console.log(error)
     },
     fetchTopicSuccess (state, payload) {
-      console.log(payload)
-      state.topic[payload.id] = payload
+      state.topics[payload.id] = payload
     },
     fetchTopicFailed(state, error) {
       console.log(error)
