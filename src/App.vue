@@ -1,10 +1,10 @@
 <template>
   <div>
     <mu-appbar class="appbar" title="CNode社区" :zDepth="1">
-      <mu-icon-button icon="menu" slot="left" @click="toggle()"/>
+      <mu-icon-button icon="menu" slot="left" @click="toggle"/>
     </mu-appbar>
-    <mu-drawer :open="open" :docked="docked" @close="toggle()">
-      <mu-list-item @click="toggle()">
+    <mu-drawer :open="open" :docked="docked" @close="toggle">
+      <mu-list-item @click="toggle">
         <router-link to="/">首页</router-link>
       </mu-list-item>
     </mu-drawer>

@@ -1,4 +1,4 @@
-import {paramsOverwrite, objectToUrl, isEmptyObject} from './utils.js';
+import {paramsOverwrite, objectToUrl, isEmptyObject} from '../utils';
 
 const CNODE = 'https://cnodejs.org/api/v1';
 const accesstoken = 0;

@@ -37,34 +37,30 @@
 </template>
 
 <script>
-  import cnode from '../utils/api';
-  import TopicReply from './TopicReply';
-  import { toRelativeTime } from '../utils/utils';
+  import { mapActions, mapState } from 'vuex'
+  import { toRelativeTime } from '../utils/';
+  import TopicReply from './TopicReply'
 
   export default {
     name: 'topic',
     data() {
       return {
-        topic: null,
-        loading: true,
+        loading: false,
+        topicId: ''
       };
     },
     created() {
-      this.getTopic().then(data => {
-        console.log(data)
-        this.loading = false;
-        this.topic = data;
-      })
+      this.fetchTopic(this.$route.params.topicId)
     },
     methods: {
-      getTopic() {
-        let topicId = this.$route.params.topicId;
-        return cnode('topic_details',{
-          pathParams: [topicId]
-        });
-      },
+      ...mapActions([
+        'fetchTopic'
+      ])
     },
     computed: {
+      ...mapState({
+        topic: state => state.topic[this.$route.params.topicId]
+      }),
       createdDate() {
         let mesc = new Date() - new Date(this.topic.create_at);
         return toRelativeTime(mesc);

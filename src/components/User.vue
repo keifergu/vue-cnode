@@ -40,7 +40,7 @@
 </template>
 
 <script>
-  import cnode from '../utils/api';
+  import cnode from '../api';
   import TopicListItem from './TopicListItem';
 
   export default {

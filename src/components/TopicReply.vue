@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { toRelativeTime } from '../utils/utils';
+import { toRelativeTime } from '../utils';
 
 export default {
   name: 'topic-reply',

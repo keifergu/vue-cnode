@@ -18,29 +18,27 @@
 </template>
 
 <script>
-import cnode from '../utils/api.js';
+import { mapActions, mapState } from 'vuex'
 import TopicListItem from './TopicListItem'
 
 export default {
   name: 'topic-list',
   data() {
     return {
-      'topics': {},
-    };
+    }
   },
   created() {
-    this.getTopics().then(data => {
-      console.log(data)
-      this.$data.topics = data;
-    });
+    this.fetchTopicList()
   },
   methods: {
-    getTopics() {
-      return cnode('topic_home');
-    },
+    ...mapActions([
+      'fetchTopicList'
+    ])
   },
   computed: {
-
+    ...mapState([
+      'topics'
+    ])
   },
   components: {
     TopicListItem
