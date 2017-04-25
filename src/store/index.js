@@ -34,6 +34,7 @@ const store = new Vuex.Store({
       console.log(error)
     },
     fetchTopicSuccess (state, payload) {
+      // TODO： 合并数据，抽取评论信息
       state.topics[payload.id] = payload
     },
     fetchTopicFailed(state, error) {
@@ -52,6 +53,31 @@ const store = new Vuex.Store({
       })
         .then(data => commit('fetchTopicSuccess', data))
         .catch(error => commit('fetchTopicFailed', error))
+    }
+  },
+  getters: {
+    topicsWithAuthor: state => {
+      var newTopics = {}
+      for(let id in state.topics) {
+        newTopics[id] = {...state.topics,author: state.authors[state.topics[id].author_id]}
+      }
+      return newTopics
+    },
+    // TODO： 完成具体的 topics 过滤方法
+    allTopics: (state, getters) => {
+      return getters.topicsWithAuthor()
+    },
+    essenceTopics: (state, getters) => {
+      return getters.topicsWithAuthor()
+    },
+    shareTopics: (state, getters) => {
+      return getters.topicsWithAuthor()
+    },
+    questionTopics: (state, getters) => {
+      return getters.topicsWithAuthor()
+    },
+    jobTopics: (state, getters) => {
+      return getters.topicsWithAuthor()
     }
   }
 })

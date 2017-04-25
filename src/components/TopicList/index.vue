@@ -1,5 +1,5 @@
 <template>
-  <mu-paper class="container">
+  <mu-paper class="list-container">
     <div v-for="topic in topics">
       <topic-list-item
         :topicId="topic.id"
@@ -11,27 +11,19 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+
 import TopicListItem from './TopicListItem'
 
 export default {
   name: 'topic-list',
-  data() {
-    return {
-    }
-  },
-  created() {
-    this.fetchTopicList()
+  props: {
+    topics: Object
   },
   methods: {
-    ...mapActions([
-      'fetchTopicList'
-    ])
+
   },
   computed: {
-    ...mapState([
-      'topics'
-    ])
+
   },
   components: {
     TopicListItem
@@ -40,10 +32,9 @@ export default {
 </script>
 
 <style scoped>
-.container {
-
-}
-a {
-  color: black;
-}
+  .list-container {
+  }
+  a {
+    color: black;
+  }
 </style>

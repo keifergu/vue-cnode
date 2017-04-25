@@ -1,7 +1,7 @@
 <template>
   <mu-flexbox class="container">
     <div class="author">
-      <mu-avatar :src="authorInfo.avatar_url"/>
+      <mu-avatar :src="author.avatar_url"/>
     </div>
     <mu-flexbox-item grow="8" class="title">
       <div class="topic-title">
@@ -26,23 +26,16 @@
 
 <script>
 import { mapState } from 'vuex'
-import { toRelativeTime } from '../utils';
+import { toRelativeTime } from '../../utils'
 
 export default {
   name: 'topic-list-item',
   props: {
-    topicId: String,
+    topic: Object,
   },
   methods: {
   },
   computed: {
-    t() {
-      return this.$store.state.topics[this.topicId]
-    },
-    // 返回话题的链接
-    authorInfo(){
-      return this.$store.state.authors[this.t.author]
-    },
     topicPath() {
       return '/topic/' + this.topicId;
     },

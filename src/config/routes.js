@@ -1,7 +1,9 @@
-import App from '../App';
-import Topic from '../components/Topic';
-import TopicList from '../components/TopicList';
-import User from '../components/User';
+import App from '../App'
+import Login from '../pages/Login'
+import Topic from '../pages/Topic'
+import Home from '../pages/Home'
+import User from '../pages/User'
+
 
 export default [
   {
@@ -10,7 +12,7 @@ export default [
     children: [
       {
         path: '',
-        component: TopicList,
+        component: Home,
       },
       {
         path: '/topic/:topicId',
@@ -19,6 +21,10 @@ export default [
       {
         path: '/user/:loginname',
         component: User,
+      },
+      {
+        path: '/login',
+        component: Login
       }
     ]
   }

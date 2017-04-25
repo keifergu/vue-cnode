@@ -41,7 +41,7 @@
 
 <script>
   import cnode from '../api';
-  import TopicListItem from './TopicListItem';
+  import TopicListItem from '../components/TopicList/TopicListItem';
 
   export default {
     name: 'user',

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="topic-container">
     <div v-if="loading">
       loading...
     </div>
@@ -39,7 +39,7 @@
 <script>
   import { mapActions, mapState } from 'vuex'
   import { toRelativeTime } from '../utils/';
-  import TopicReply from './TopicReply'
+  import TopicReply from '../components/TopicReply'
 
   export default {
     name: 'topic',
@@ -74,7 +74,7 @@
 </script>
 
 <style scoped>
-  .container {
+  .topic-container{
     margin: ;
   }
   .content {

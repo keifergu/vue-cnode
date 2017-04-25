@@ -4,9 +4,7 @@
       <mu-icon-button icon="menu" slot="left" @click="toggle"/>
     </mu-appbar>
     <mu-drawer :open="open" :docked="docked" @close="toggle">
-      <mu-list-item @click="toggle">
-        <router-link to="/">首页</router-link>
-      </mu-list-item>
+      <navigator @click.native="toggle" />
     </mu-drawer>
     <mu-row gutter class="container">
       <mu-col width="0" tablet="10" desktop="20" />
@@ -19,6 +17,9 @@
 </template>
 
 <script>
+
+import Navigator from './components/Navigator'
+
 export default {
   name: 'app',
   data() {
@@ -32,13 +33,14 @@ export default {
       this.open = !this.open;
       this.docked = !this.docked;
     }
-  }
+  },
+  components: { Navigator }
 }
 </script>
 
 <style scoped>
 .container {
-  margin: 29px 2px 2px 2px;
+  margin-top: 60px;
 }
 .appbar {
   position: fixed;
