@@ -5,16 +5,16 @@
     </div>
     <mu-flexbox-item grow="8" class="title">
       <div class="topic-title">
-        <div class="topic-label" v-show="t.top">
+        <div class="topic-label" v-show="topic.top">
           置顶
         </div>
         <router-link :to="topicPath">
-          {{t.title}}
+          {{topic.title}}
         </router-link>
       </div>
       <div class="sub-title">
         <div class="reply-count">
-          {{t.reply_count + "/" + t.visit_count}}
+          {{topic.reply_count + "/" + topic.visit_count}}
         </div>
         <div class="reply-date">
           {{lastReplyDate}}前
@@ -36,12 +36,15 @@ export default {
   methods: {
   },
   computed: {
+    author() {
+      return this.topic.author
+    },
     topicPath() {
-      return '/topic/' + this.topicId;
+      return '/topic/' + this.topic.id;
     },
     // 返回最后一次回复的时间，格式为 xx小时 或 xx分钟
     lastReplyDate() {
-      let mesc = new Date() - new Date(this.t.last_reply_at);
+      let mesc = new Date() - new Date(this.topic.last_reply_at);
       return toRelativeTime(mesc);
     }
   },

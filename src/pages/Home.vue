@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import { mapActions, mapState } from 'vuex'
+  import { mapActions, mapGetter } from 'vuex'
   import TopicList from '../components/TopicList/index'
 
   export default {
@@ -19,9 +19,9 @@
       }
     },
     computed: {
-      ...mapState([
-        'topics'
-      ])
+      topics(){
+        return this.$store.getters.allTopics
+      }
     },
     components: { TopicList }
   }

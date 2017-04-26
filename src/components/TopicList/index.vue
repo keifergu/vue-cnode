@@ -1,8 +1,8 @@
 <template>
   <mu-paper class="list-container">
-    <div v-for="topic in topics">
+    <div v-for="topic of topics">
       <topic-list-item
-        :topicId="topic.id"
+        :topic="topic"
         class="topic-item"
       />
       <mu-divider />
