@@ -4,7 +4,7 @@
       <mu-avatar :src="user.avatar_url" @click.native="linkToLogin"/>
     </div>
     <mu-list-item>
-      <router-link to="/">首页</router-link>
+      <router-link to="/home">首页</router-link>
     </mu-list-item>
     <mu-list-item>
       <router-link to="/essence">精华</router-link>

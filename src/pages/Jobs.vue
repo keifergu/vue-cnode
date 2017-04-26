@@ -9,6 +9,16 @@
 
   export default {
     name: 'jobs',
+    created() {
+      this.fetchData()
+    },
+    methods: {
+      fetchData(){
+        this.$store.dispatch("fetchTopicList", {
+          tab: 'job'
+        })
+      }
+    },
     computed: {
       topics(){
         return this.$store.getters.jobTopics

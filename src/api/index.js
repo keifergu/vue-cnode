@@ -3,7 +3,7 @@ import {paramsOverwrite, objectToUrl, isEmptyObject} from '../utils';
 const CNODE = 'https://cnodejs.org/api/v1';
 const accesstoken = 0;
 const apiConfig = {
-  topic_home: {
+  topics: {
     method: 'GET',
     path: '/topics',
     params: {
@@ -36,7 +36,7 @@ function setToken(accesstoken) {
  * CNode api 封装
  * UseAge：
  * import {cnode} from '';
- * cnode('topic_home')
+ * cnode('topics')
  * @param  {String} api_string   调用的api名称，由config对象所定义
  * @param  {Object} params       API的自定义配置参数，会覆盖默认参数,传送的数据参数
  * @param  {Array}  pathParams   路径参数，按照顺序的数组

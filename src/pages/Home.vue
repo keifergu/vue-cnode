@@ -14,7 +14,7 @@
     },
     methods: {
       fetchData(){
-        this.$store.dispatch("fetchTopicList")
+        this.$store.dispatch("fetchTopics")
       }
     },
     computed: {

@@ -15,7 +15,11 @@ export default [
     component: App,
     children: [
       {
-        path: '',
+        path: '/',
+        component: Home,
+      },
+      {
+        path: '/home',
         component: Home,
       },
       {

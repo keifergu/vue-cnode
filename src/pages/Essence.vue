@@ -9,11 +9,19 @@
 
   export default {
     name: 'essence',
+    created() {
+      this.fetchData()
+    },
+    methods: {
+      fetchData(){
+        this.$store.dispatch("fetchTopicList", {
+          tab: 'good'
+        })
+      }
+    },
     computed: {
       topics(){
-        var res = this.$store.getters.essenceTopics
-        console.log(res)
-        return res
+        return this.$store.getters.essenceTopics
       }
     },
     components: { TopicList }

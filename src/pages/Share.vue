@@ -9,6 +9,16 @@
 
   export default {
     name: 'share',
+    created() {
+      this.fetchData()
+    },
+    methods: {
+      fetchData(){
+        this.$store.dispatch("fetchTopicList", {
+          tab: 'share'
+        })
+      }
+    },
     computed: {
       topics(){
         return this.$store.getters.shareTopics

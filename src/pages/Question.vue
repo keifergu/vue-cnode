@@ -9,6 +9,16 @@
 
   export default {
     name: 'question',
+    created() {
+      this.fetchData()
+    },
+    methods: {
+      fetchData(){
+        this.$store.dispatch("fetchTopicList", {
+          tab: 'ask'
+        })
+      }
+    },
     computed: {
       topics(){
         return this.$store.getters.questionTopics

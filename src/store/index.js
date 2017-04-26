@@ -1,39 +1,47 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import cnode from '../api'
-import { normalize, schema } from 'normalizr'
+import { normalize, schema, denormalize } from 'normalizr'
 
 import _ from 'lodash'
 
 Vue.use(Vuex)
 
 const author = new schema.Entity('authors');
+
 const topic = new schema.Entity('topics', {
   author: author
+},{
+  processStrategy: value => _.set(value,'author.id',value.author_id)
+  //({...value, author:{...value.author,id: value.author_id}}),
 });
+
+const topicList = [topic];
 
 const store = new Vuex.Store({
   state: {
     topics: {},
-    authors: {}
+    authors: {},
+    config: {},
+    result: {}
   },
   mutations: {
     fetchTopicListSuccess (state, payload) {
-      var data = payload.map(topic => {
-        return {
-          ...topic,
-          author: {
-            id: topic.author_id,
-            ...topic.author
-          }
-        }
-      })
-      const normalizedData = normalize(data, [topic]);
-      state.topics = normalizedData.entities.topics
-      state.authors = normalizedData.entities.authors
+      const normalizeData = normalize(payload, topicList);
+
+      /*var defaults = _.partialRight(_.assign, function(value, other) {
+        return _.isUndefined(value) ? other : value;
+      });*/
+
+      //defaults(state.topics, normalizeData.entities.topics)
+
+      // TODO: 数据合并，保留旧数据
+      state.topics = Object.assign({}, normalizeData.entities.topics, state.topics)
+      state.authors = Object.assign({}, normalizeData.entities.authors, state.authors)
+      state.result = normalizeData.result
     },
     fetchTopicListFailed(state, error) {
-      console.log(error)
+      console.error(error)
     },
     fetchTopicSuccess (state, payload) {
       // TODO： 合并数据，抽取评论信息
@@ -44,8 +52,17 @@ const store = new Vuex.Store({
     },
   },
   actions: {
-    fetchTopicList ( { commit } ) {
-      cnode('topic_home')
+    fetchTopicList ( { commit }, payload) {
+      cnode('topics',{
+        params: {
+          tab: payload.tab || 'share'
+        }
+      })
+        .then(data => commit('fetchTopicListSuccess', data))
+        .catch(error => commit('fetchTopicListFailed', error))
+    },
+    fetchTopics ( { commit } ) {
+      cnode('topics')
         .then(data => commit('fetchTopicListSuccess', data))
         .catch(error => commit('fetchTopicListFailed', error))
     },
@@ -59,11 +76,7 @@ const store = new Vuex.Store({
   },
   getters: {
     topicsWithAuthor: state => {
-      var newTopics = {}
-      for(let id in state.topics) {
-        newTopics[id] = {...state.topics[id],author: state.authors[state.topics[id].author_id]}
-      }
-      return newTopics
+      return denormalize(state.result, topicList, state)
     },
     allTopics: (state, getters) => {
       return _.chain(getters.topicsWithAuthor)

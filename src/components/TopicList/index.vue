@@ -3,6 +3,7 @@
     <div v-for="topic of topics">
       <topic-list-item
         :topic="topic"
+        :id="topic.id"
         class="topic-item"
       />
       <mu-divider />
