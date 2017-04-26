@@ -66,11 +66,13 @@ export default function cnode(
     method: api.method
   };
 
-  return fetch(fullURL, fetchConf).then(response => {
-    if (response.ok) {
-      return response.json();
-    }
-  }).then(json => {
-    return json.data;
-  });
+  return fetch(fullURL, fetchConf)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+    })
+    .then(json => {
+      return json.data;
+    });
 }

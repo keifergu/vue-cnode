@@ -17,7 +17,7 @@ import TopicListItem from './TopicListItem'
 export default {
   name: 'topic-list',
   props: {
-    topics: Object
+    topics: Array | Object
   },
   methods: {
 

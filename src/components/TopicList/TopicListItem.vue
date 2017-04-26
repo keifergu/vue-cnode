@@ -1,5 +1,5 @@
 <template>
-  <mu-flexbox class="container">
+  <mu-flexbox class="item-container">
     <div class="author">
       <mu-avatar :src="author.avatar_url"/>
     </div>
@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.item-container {
   height: 50px;
   margin-left: 5px;
   padding-right: 15px;

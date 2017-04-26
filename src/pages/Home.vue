@@ -5,11 +5,10 @@
 </template>
 
 <script>
-  import { mapActions, mapGetter } from 'vuex'
   import TopicList from '../components/TopicList/index'
 
   export default {
-    name: 'app',
+    name: 'home',
     created() {
       this.fetchData()
     },
@@ -28,14 +27,6 @@
 </script>
 
 <style scoped>
-  .container {
-    margin-top: 60px;
-  }
-  .appbar {
-    position: fixed;
-    top: 0px;
-    height: 55px;
-  }
   a {
     color: black;
   }

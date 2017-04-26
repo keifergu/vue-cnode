@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import cnode from '../api'
 import { normalize, schema } from 'normalizr'
 
+import _ from 'lodash'
+
 Vue.use(Vuex)
 
 const author = new schema.Entity('authors');
@@ -63,21 +65,29 @@ const store = new Vuex.Store({
       }
       return newTopics
     },
-    // TODO： 完成具体的 topics 过滤方法
     allTopics: (state, getters) => {
-      return getters.topicsWithAuthor
+      return _.chain(getters.topicsWithAuthor)
+        .value()
     },
     essenceTopics: (state, getters) => {
-      return getters.topicsWithAuthor
+      return _.chain(getters.topicsWithAuthor)
+        .filter(t => t.good)
+        .value()
     },
     shareTopics: (state, getters) => {
-      return getters.topicsWithAuthor
+      return _.chain(getters.topicsWithAuthor)
+        .filter(t => t.tab == "share")
+        .value()
     },
     questionTopics: (state, getters) => {
-      return getters.topicsWithAuthor
+      return _.chain(getters.topicsWithAuthor)
+        .filter(t => t.tab == "ask")
+        .value()
     },
     jobTopics: (state, getters) => {
-      return getters.topicsWithAuthor
+      return _.chain(getters.topicsWithAuthor)
+        .filter(t => t.tab == "job")
+        .value()
     }
   }
 })

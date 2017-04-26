@@ -6,6 +6,18 @@
     <mu-list-item>
       <router-link to="/">首页</router-link>
     </mu-list-item>
+    <mu-list-item>
+      <router-link to="/essence">精华</router-link>
+    </mu-list-item>
+    <mu-list-item>
+      <router-link to="/question">问答</router-link>
+    </mu-list-item>
+    <mu-list-item>
+      <router-link to="/share">分享</router-link>
+    </mu-list-item>
+    <mu-list-item>
+      <router-link to="/jobs">工作</router-link>
+    </mu-list-item>
   </div>
 </template>
 
