@@ -58,7 +58,7 @@ export default function cnode(
   let path = (typeof api.path === 'string' )
     ? api.path : api.path(...pathParams);
   // 使用自定以的参数覆盖默认参数
-  let fullParams = paramsOverwrite(api.params, params);
+  let fullParams = Object.assign({},api.params, params);
   // 获得完整的URL,如果是GET方法，则将参数附加在url之后，POST方法则在后面处理
   let fullURL = CNODE + path + '?' + objectToUrl(fullParams);
 
