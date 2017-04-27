@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import cnode from '../api'
 import { normalize, schema, denormalize } from 'normalizr'
+
+import cnode from '../api'
 
 import _ from 'lodash'
 
@@ -47,7 +48,7 @@ const store = new Vuex.Store({
     },
     fetchTopicSuccess (state, payload) {
       // TODO： 合并数据，抽取评论信息
-      state.topics[payload.id] = payload
+      Vue.set(state.topics, payload.id, payload)
     },
     fetchTopicFailed(state, error) {
       console.log(error)
@@ -68,7 +69,8 @@ const store = new Vuex.Store({
         .then(data => commit('fetchTopicListSuccess', data))
         .catch(error => commit('fetchTopicListFailed', error))
     },
-    fetchTopic ( { commit }, topicId) {
+    fetchTopicByPath ( { commit, state, getters } ) {
+      const topicId = getters.currentTopicId
       cnode('topic_details', {
         pathParams: [topicId]
       })
@@ -77,6 +79,13 @@ const store = new Vuex.Store({
     }
   },
   getters: {
+    currentTopicId: state => {
+      return state.route.params.topicId || false
+    },
+    currentTopic: (state, getters) => {
+      const id = getters.currentTopicId
+      return state.topics[id]
+    },
     topicsWithAuthor: state => {
       return denormalize(state.result, topicList, state)
     },

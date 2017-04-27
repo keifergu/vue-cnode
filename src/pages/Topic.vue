@@ -37,32 +37,26 @@
 </template>
 
 <script>
-  import { mapActions, mapState } from 'vuex'
+  import { mapActions, mapGetters } from 'vuex'
   import { toRelativeTime } from '../utils/';
   import TopicReply from '../components/TopicReply'
 
   export default {
     name: 'topic',
-    data() {
-      return {
-        loading: false,
-        topicId: ''
-      };
-    },
     created() {
-      this.fetchTopic(this.$route.params.topicId)
+      this.fetchTopicByPath()
     },
     methods: {
       ...mapActions([
-        'fetchTopic'
+        'fetchTopicByPath'
       ])
     },
     computed: {
-      ...mapState({
-
+      ...mapGetters({
+        topic: 'currentTopic'
       }),
-      topic() {
-        return this.$store.state.topics[this.$route.params.topicId]
+      loading() {
+        return this.topic === undefined
       },
       createdDate() {
         let mesc = new Date() - new Date(this.topic.create_at);
