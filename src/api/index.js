@@ -8,6 +8,7 @@ const apiConfig = {
     path: '/topics',
     params: {
       mdrender: true,
+      limit: 15
     },
   },
   topic_details: {

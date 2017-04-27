@@ -1,13 +1,16 @@
 <template>
   <mu-paper class="list-container">
-    <div v-for="topic of topics">
+    <transition-group
+      v-for="topic of topics"
+      name="list"
+      tag="div"
+    >
       <topic-list-item
         :topic="topic"
-        :id="topic.id"
+        :key="topic.id"
         class="topic-item"
       />
-      <mu-divider />
-    </div>
+    </transition-group>
   </mu-paper>
 </template>
 
@@ -34,6 +37,9 @@ export default {
 
 <style scoped>
   .list-container {
+  }
+  .list-move {
+    transition: transform 1s;
   }
   a {
     color: black;

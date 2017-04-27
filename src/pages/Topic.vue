@@ -1,38 +1,40 @@
 <template>
   <div class="topic-container">
-    <div v-if="loading">
+    <div v-show="loading">
       loading...
     </div>
-    <div v-else>
-      <!-- 文章内容 -->
-      <mu-paper class="content">
-        <div class="title">
-          {{topic.title}}
-        </div>
-        <div class="topic-info">
-          <span class="time">- 发布 {{createdDate}}前</span>
-          <span class="name">- 作者 {{topic.author.loginname}}</span>
-          <!-- <img :src="topic.author.avatar_url"> -->
-        </div>
-        <mu-divider />
-        <div class="topic-content">
-          <div v-html="topic.content">
-        </div>
-      </mu-paper>
-      <!-- 回复 -->
-      <mu-paper class="reply">
-        <div class="reply-title">共{{topic.reply_count}}条回复：</div>
-        <mu-divider/>
-        <div v-for="reply in topic.replies">
-          <topic-reply
-            :author="reply.author"
-            :content="reply.content"
-            :replyTime="reply.create_at"
-          />
+    <transition name="fade">
+      <div v-show="!loading">
+        <!-- 文章内容 -->
+        <mu-paper class="content">
+          <div class="title">
+            {{topic.title}}
+          </div>
+          <div class="topic-info">
+            <span class="time">- 发布 {{createdDate}}前</span>
+            <span class="name">- 作者 {{topic.author.loginname}}</span>
+            <!-- <img :src="topic.author.avatar_url"> -->
+          </div>
+          <mu-divider />
+          <div class="topic-content">
+            <div v-html="topic.content">
+          </div>
+        </mu-paper>
+        <!-- 回复 -->
+        <mu-paper class="reply">
+          <div class="reply-title">共{{topic.reply_count}}条回复：</div>
           <mu-divider/>
-        </div>
-      </mu-paper>
-    </div>
+          <div v-for="reply in topic.replies">
+            <topic-reply
+              :author="reply.author"
+              :content="reply.content"
+              :replyTime="reply.create_at"
+            />
+            <mu-divider/>
+          </div>
+        </mu-paper>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -95,5 +97,11 @@
     display: inline-block;
   }
   .topic-info li {
+  }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s
+  }
+  .fade-enter, .fade-leave-active {
+    opacity: 0
   }
 </style>

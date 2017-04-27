@@ -35,8 +35,8 @@ const store = new Vuex.Store({
     fetchTopicListSuccess (state, payload) {
       const normalizeData = normalize(payload, topicList);
 
-      state.topics = mergeDiffValue(state.topics, normalizeData.entities.topics)
-      state.authors = mergeDiffValue(state.authors, normalizeData.entities.authors)
+      state.topics = Object.assign({}, normalizeData.entities.topics, state.topics)
+      state.authors = Object.assign({}, normalizeData.entities.authors, state.authors)
       state.result = _
         .chain(state.result)
         .concat(normalizeData.result)
@@ -80,11 +80,11 @@ const store = new Vuex.Store({
   },
   getters: {
     currentTopicId: state => {
-      return state.route.params.topicId || false
+      return state.route.params.topicId || undefined
     },
     currentTopic: (state, getters) => {
       const id = getters.currentTopicId
-      return state.topics[id]
+      return state.topics[id] || undefined
     },
     topicsWithAuthor: state => {
       return denormalize(state.result, topicList, state)
