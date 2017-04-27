@@ -7,13 +7,18 @@ import _ from 'lodash'
 
 Vue.use(Vuex)
 
+function customizer(objValue, srcValue) {
+  return  _.isUndefined(objValue) ? srcValue: objValue
+}
+
+var mergeDiffValue = _.partialRight(_.assignWith, customizer)
+
 const author = new schema.Entity('authors');
 
 const topic = new schema.Entity('topics', {
   author: author
 },{
   processStrategy: value => _.set(value,'author.id',value.author_id)
-  //({...value, author:{...value.author,id: value.author_id}}),
 });
 
 const topicList = [topic];
@@ -23,22 +28,19 @@ const store = new Vuex.Store({
     topics: {},
     authors: {},
     config: {},
-    result: {}
+    result: []
   },
   mutations: {
     fetchTopicListSuccess (state, payload) {
       const normalizeData = normalize(payload, topicList);
 
-      /*var defaults = _.partialRight(_.assign, function(value, other) {
-        return _.isUndefined(value) ? other : value;
-      });*/
-
-      //defaults(state.topics, normalizeData.entities.topics)
-
-      // TODO: 数据合并，保留旧数据
-      state.topics = Object.assign({}, normalizeData.entities.topics, state.topics)
-      state.authors = Object.assign({}, normalizeData.entities.authors, state.authors)
-      state.result = normalizeData.result
+      state.topics = mergeDiffValue(state.topics, normalizeData.entities.topics)
+      state.authors = mergeDiffValue(state.authors, normalizeData.entities.authors)
+      state.result = _
+        .chain(state.result)
+        .concat(normalizeData.result)
+        .uniq()
+        .value()
     },
     fetchTopicListFailed(state, error) {
       console.error(error)
