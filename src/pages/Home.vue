@@ -12,6 +12,9 @@
     created() {
       this.fetchData()
     },
+    update() {
+      console.log('update')
+    },
     methods: {
       fetchData(){
         this.$store.dispatch("fetchTopics")
@@ -19,7 +22,7 @@
     },
     computed: {
       topics(){
-        return this.$store.getters.allTopics
+        return this.$store.getters.currentTopicList
       }
     },
     components: { TopicList }

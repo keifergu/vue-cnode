@@ -9,7 +9,9 @@
     <mu-row gutter class="container">
       <mu-col width="0" tablet="10" desktop="20" />
       <mu-col width="100" tablet="80" desktop="60">
-        <router-view></router-view>
+        <transition>
+          <router-view></router-view>
+        </transition>
       </mu-col>
       <mu-col width="0" tablet="10" desktop="20" />
     </mu-row>
@@ -46,6 +48,12 @@ export default {
   position: fixed;
   top: 0px;
   height: 55px;
+}
+.fade-enter {
+  opacity: 0
+}
+.fade-enter-active {
+  transition: opacity 1s
 }
 a {
   color: black;

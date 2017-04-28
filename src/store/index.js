@@ -86,10 +86,19 @@ const store = new Vuex.Store({
       const id = getters.currentTopicId
       return state.topics[id] || undefined
     },
+    currentTab: (state, getters) => {
+      const pathRe = new RegExp(/\/(\w+)\/?/)
+      const path = pathRe.exec(state.route.path)
+      return  path ? path[1] : 'home'
+    },
+    currentTopicList: (state, getters) => {
+      const tab = getters.currentTab
+      return getters[ tab + 'Topics']
+    },
     topicsWithAuthor: state => {
       return denormalize(state.result, topicList, state)
     },
-    allTopics: (state, getters) => {
+    homeTopics: (state, getters) => {
       return _.chain(getters.topicsWithAuthor)
         .value()
     },
@@ -108,7 +117,7 @@ const store = new Vuex.Store({
         .filter(t => t.tab == "ask")
         .value()
     },
-    jobTopics: (state, getters) => {
+    jobsTopics: (state, getters) => {
       return _.chain(getters.topicsWithAuthor)
         .filter(t => t.tab == "job")
         .value()

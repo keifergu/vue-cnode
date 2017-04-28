@@ -1,14 +1,14 @@
 <template>
   <mu-paper class="list-container">
     <transition-group
-      v-for="topic of topics"
       name="list"
       tag="div"
     >
       <topic-list-item
+        v-for="topic of topics"
         :topic="topic"
         :key="topic.id"
-        class="topic-item"
+        class="list-item"
       />
     </transition-group>
   </mu-paper>
@@ -21,7 +21,7 @@ import TopicListItem from './TopicListItem'
 export default {
   name: 'topic-list',
   props: {
-    topics: Array | Object
+    topics: Array
   },
   methods: {
 
@@ -36,10 +36,12 @@ export default {
 </script>
 
 <style scoped>
-  .list-container {
+  .list-item {
+    transition: all 1s;
   }
-  .list-move {
-    transition: transform 1s;
+  .list-enter, .list-leave-active {
+    opacity: 0;
+    transform: translateX(50px);
   }
   a {
     color: black;

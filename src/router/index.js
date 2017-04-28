@@ -24,19 +24,19 @@ export default [
       },
       {
         path: '/essence',
-        component: Essence,
+        component: Home,
       },
       {
         path: '/share',
-        component: Share,
+        component: Home,
       },
       {
         path: '/question',
-        component: Question,
+        component: Home,
       },
       {
         path: '/jobs',
-        component: Jobs,
+        component: Home,
       },
       {
         path: '/topic/:topicId',
