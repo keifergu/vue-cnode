@@ -4,10 +4,6 @@ import Topic from '../pages/Topic'
 import User from '../pages/User'
 
 import Home from '../pages/Home'
-import Essence from '../pages/Essence'
-import Share from '../pages/Share'
-import Question from '../pages/Question'
-import Jobs from '../pages/Jobs'
 
 export default [
   {
