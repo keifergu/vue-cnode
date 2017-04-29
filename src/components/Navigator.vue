@@ -35,7 +35,7 @@
     },
     methods: {
       linkTo(path){
-        this.$router.push(path)
+        this.$router.push({ path })
         this.$store.dispatch('fetchTopicList')
       }
     }

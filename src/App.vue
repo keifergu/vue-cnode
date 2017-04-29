@@ -1,7 +1,7 @@
 <template>
   <div>
-    <mu-appbar class="appbar" title="CNode社区" :zDepth="1">
-      <mu-icon-button icon="menu" slot="left" @click="toggle"/>
+    <mu-appbar class="appbar" :title="title" :zDepth="1">
+      <mu-icon-button :icon="icon" slot="left" @click="iconClick" />
     </mu-appbar>
     <mu-drawer :open="open" :docked="docked" @close="toggle">
       <navigator @click.native="toggle" />
@@ -27,13 +27,30 @@ export default {
   data() {
     return {
       open: false,
-      docked: true,
+      docked: true
     };
   },
   methods: {
     toggle(flag) {
       this.open = !this.open;
       this.docked = !this.docked;
+    },
+    iconClick() {
+      if (this.topic)
+        this.$router.go(-1)
+      else
+        this.toggle()
+    }
+  },
+  computed:{
+    topic() {
+      return this.$store.getters.currentTopic
+    },
+    title() {
+      return this.topic ? this.topic.title : 'CNode.js 中文社区'
+    },
+    icon(){
+      return this.topic ? "arrow_back" : "menu"
     }
   },
   components: { Navigator }
