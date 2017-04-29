@@ -7,6 +7,7 @@ const apiConfig = {
     method: 'GET',
     path: '/topics',
     params: {
+      page: 1,
       mdrender: true,
       limit: 15
     },

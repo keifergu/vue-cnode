@@ -12,12 +12,9 @@
     created() {
       this.fetchData()
     },
-    update() {
-      console.log('update')
-    },
     methods: {
       fetchData(){
-        this.$store.dispatch("fetchTopics")
+        this.$store.dispatch("fetchTopicList")
       }
     },
     computed: {

@@ -1,6 +1,5 @@
 <template>
   <mu-flexbox class="item-container">
-
     <div class="author">
       <mu-avatar :src="author.avatar_url"/>
     </div>

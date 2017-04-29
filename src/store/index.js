@@ -55,11 +55,19 @@ const store = new Vuex.Store({
     },
   },
   actions: {
-    fetchTopicList ( { commit }, payload) {
+    fetchTopicList ( { commit, getters }, payload) {
+      const map = {
+        home: '',
+        essence: 'good',
+        question: 'ask',
+        share: 'share',
+        jobs: 'job'
+      }
+      const tab = map[ getters.currentTab ]
+      const tabObj =  tab ? {tab} : {}
+      const params = Object.assign({}, tabObj)
       cnode('topics',{
-        params: {
-          tab: payload.tab || 'share'
-        }
+        params
       })
         .then(data => commit('fetchTopicListSuccess', data))
         .catch(error => commit('fetchTopicListFailed', error))

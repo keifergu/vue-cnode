@@ -17,7 +17,7 @@
           </div>
           <mu-divider />
           <div class="topic-content">
-            <div v-html="topic.content">
+            <div v-html="topic.content"></div>
           </div>
         </mu-paper>
         <!-- 回复 -->

@@ -41,7 +41,10 @@ export default {
   }
   .list-enter, .list-leave-active {
     opacity: 0;
-    transform: translateX(50px);
+    transform: translateX(100px);
+  }
+  .list-leave-active {
+    position: absolute;
   }
   a {
     color: black;
