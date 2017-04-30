@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="avatar">
-      <mu-avatar :src="user.avatar_url" @click.native="linkToLogin"/>
+      <mu-avatar :src="user.avatar_url" @click.native="linkTo('login')"/>
     </div>
     <mu-list-item @click="linkTo('home')">
       <router-link to="/home">首页</router-link>

@@ -33,6 +33,7 @@
             <mu-divider/>
           </div>
         </mu-paper>
+        <reply-editor />
       </div>
     </transition>
   </div>
@@ -40,8 +41,9 @@
 
 <script>
   import { mapActions, mapGetters } from 'vuex'
-  import { toRelativeTime } from '../utils/';
+  import { toRelativeTime } from '../utils/'
   import TopicReply from '../components/TopicReply'
+  import ReplyEditor from '../components/ReplyEditor'
 
   export default {
     name: 'topic',
@@ -65,7 +67,7 @@
         return toRelativeTime(mesc);
       },
     },
-    components: { TopicReply }
+    components: { TopicReply, ReplyEditor }
   };
 </script>
 
