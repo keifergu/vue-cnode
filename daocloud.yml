@@ -1,14 +1,43 @@
-version: 2.0
-test:
-build:
-  lite_image:
-    compile:
-      dockerfile_path: Dockerfile
-      build_dir: /
-      cache: true
-    extract:
-      - /app/dist
-    package:
-      dockerfile_path: Dockerfile.sec
-      build_dir: /
-      cache: true
+version: "3"
+stages:
+- test
+- build
+- deploy
+deploy-to-production:
+  stage: deploy
+  job_type: DCS_deploy
+  only:
+    branches:
+    - master
+    tags:
+    - .*
+  app_name: cnode-qcloud
+  cluster_id: sr346813-8475-845a-a8j5-66e6z1d17a50
+deploy-to-test:
+  stage: deploy
+  job_type: DCS_test_deploy
+  only:
+    branches:
+    - dev
+    tags:
+    - .*
+  app_name: dev-cnode
+  cluster_id: cf174813-8315-477a-a8c5-66e6d1d17a50
+lite_image:
+  stage: build
+  job_type: lite_image_build
+  only:
+    branches:
+    - .*
+    tags:
+    - .*
+  compile:
+    build_dir: /
+    cache: true
+    dockerfile_path: /Dockerfile
+  extract:
+  - /app/dist
+  package:
+    build_dir: /
+    cache: true
+    dockerfile_path: /Dockerfile.sec
