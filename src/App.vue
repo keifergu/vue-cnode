@@ -9,7 +9,7 @@
     <mu-row gutter class="container">
       <mu-col width="0" tablet="10" desktop="20" />
       <mu-col width="100" tablet="80" desktop="60">
-        <transition>
+        <transition name="fade" class="router-view">
           <router-view></router-view>
         </transition>
       </mu-col>
@@ -58,21 +58,23 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  margin-top: 60px;
-}
-.appbar {
-  position: fixed;
-  top: 0px;
-  height: 55px;
-}
-.fade-enter {
-  opacity: 0
-}
-.fade-enter-active {
-  transition: opacity 1s
-}
-a {
-  color: black;
-}
+  .container {
+    margin-top: 60px;
+  }
+  .appbar {
+    position: fixed;
+    top: 0px;
+    height: 55px;
+  }
+  .router-view {
+    transition: all .7s;
+  }
+  .fade-enter,.fade-leave-active {
+    opacity: 0;
+  }
+  .fade-leave-active {
+  }
+  a {
+    color: black;
+  }
 </style>
