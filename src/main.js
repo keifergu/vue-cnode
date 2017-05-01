@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import MuseUI from 'muse-ui'
 import VueRouter from 'vue-router'
 
+import VueQuillEditor from 'vue-quill-editor'
+
 import { sync } from 'vuex-router-sync'
 
 import store from './store'
@@ -13,6 +15,7 @@ import 'muse-ui/dist/muse-ui.css'
 
 Vue.use(MuseUI)
 Vue.use(VueRouter)
+Vue.use(VueQuillEditor)
 
 Vue.config.devtools = true
 

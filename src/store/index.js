@@ -93,6 +93,7 @@ const store = new Vuex.Store({
       cnode('topics',{
         params
       })
+      // TODO: 完成新建回复，抽取回复等操作,修改 api ，对空值删除
         .then(data => commit('fetchTopicListSuccess', data))
         .catch(error => commit('fetchTopicListFailed', error))
     },
@@ -108,6 +109,18 @@ const store = new Vuex.Store({
       })
         .then(data => commit('fetchTopicSuccess', data))
         .catch(error => commit('fetchTopicFailed', error))
+    },
+    createReply ({ commit, getters }, payload) {
+      cnode("create_reply", {
+        params: {
+          accesstoken: getters.token,
+          content: payload.content,
+          reply_id: payload.reply_id
+        },
+        pathParams: [ getters.currentTopicId ]
+      })
+        .then(data => commit('createReplySuccess', data))
+        .catch(error => commit('createReplyFailed', error))
     }
   },
   getters: {

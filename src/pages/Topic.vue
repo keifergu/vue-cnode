@@ -6,7 +6,7 @@
     <transition name="fade">
       <div v-show="!loading">
         <!-- 文章内容 -->
-        <mu-paper class="content">
+        <mu-paper class="paper-content">
           <div class="title">
             {{topic.title}}
           </div>
@@ -33,7 +33,10 @@
             <mu-divider/>
           </div>
         </mu-paper>
-        <reply-editor />
+        <mu-paper class="editor-box">
+          <reply-editor class="editor"/>
+          <mu-raised-button label="发表新评论" primary @click="login" />
+        </mu-paper>
       </div>
     </transition>
   </div>
@@ -75,7 +78,7 @@
   .topic-container{
     margin: ;
   }
-  .content {
+  .paper-content {
     padding: 10px;
     word-break: break-all;
   }
@@ -97,6 +100,9 @@
     color: #616161;
     font-size: 12px;
     display: inline-block;
+  }
+  .editor-box {
+    margin: 10px auto 100px auto;
   }
   .topic-info li {
   }

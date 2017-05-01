@@ -22,7 +22,6 @@
     name: 'login',
     data() {
       return {
-        isLogin: false,
         loginInfo: '',
         token: ''
       }
