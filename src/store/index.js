@@ -28,7 +28,13 @@ const store = new Vuex.Store({
   state: {
     topics: {},
     authors: {},
-    config: {},
+    config: {
+      user:{
+        avatar_url: '',
+        loginname: ''
+      },
+      token: ''
+    },
     result: []
   },
   mutations: {
@@ -43,18 +49,36 @@ const store = new Vuex.Store({
         .uniq()
         .value()
     },
-    fetchTopicListFailed(state, error) {
+    fetchTopicListFailed (state, error) {
       console.error(error)
     },
     fetchTopicSuccess (state, payload) {
       // TODO： 合并数据，抽取评论信息
       Vue.set(state.topics, payload.id, payload)
     },
-    fetchTopicFailed(state, error) {
+    fetchTopicFailed (state, error) {
       console.log(error)
     },
+    loginSuccess (state, payload) {
+      state.config.user = payload
+    },
+    loginFailed (state, error) {
+      console.log(error)
+    }
   },
   actions: {
+    login( { commit, getters, state }, payload) {
+      cnode("login", {
+        params: {
+          accesstoken: payload.token
+        }
+      })
+        .then(data => {
+          commit('loginSuccess', data)
+          state.config.token = payload.token
+        })
+        .catch(error => commit('loginFailed', error))
+    },
     fetchTopicList ( { commit, getters }, payload) {
       const map = {
         home: '',
@@ -129,6 +153,15 @@ const store = new Vuex.Store({
       return _.chain(getters.topicsWithAuthor)
         .filter(t => t.tab == "job")
         .value()
+    },
+    token: (state) => {
+      return state.config.token
+    },
+    currentUser: (state) => {
+      return state.config.user
+    },
+    isLogin: (state) => {
+      return !!state.config.token
     }
   }
 })

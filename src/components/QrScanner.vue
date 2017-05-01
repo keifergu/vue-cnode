@@ -1,8 +1,6 @@
 <template>
   <div>
     <video id="video" @canplay.native="setVideo">Video stream not available.</video>
-    <canvas id="canvas"></canvas>
-    <img id="photo" alt="The screen capture will appear in this box.">
   </div>
 </template>
 
@@ -14,6 +12,7 @@
   export default {
     name: 'qr-scanner',
     mounted() {
+      var video = this.video;
       navigator.getMedia = (navigator.getUserMedia ||
                   navigator.webkitGetUserMedia ||
                   navigator.mozGetUserMedia ||
@@ -25,12 +24,12 @@
           },
           function (stream) {
               if (navigator.mozGetUserMedia) {
-                  this.video.mozSrcObject = stream;
+                  video.mozSrcObject = stream;
               } else {
                   var vendorURL = window.URL || window.webkitURL;
-                  this.video.src = vendorURL.createObjectURL(stream);
+                  video.src = vendorURL.createObjectURL(stream);
               }
-              this.video.play();
+              video.play();
           },
           function (err) {
               console.log("An error occured! " + err);

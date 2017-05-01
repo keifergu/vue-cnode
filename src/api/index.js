@@ -29,6 +29,10 @@ const apiConfig = {
       accesstoken: accesstoken
     }
   },
+  login: {
+    method: 'POST',
+    path: '/accesstoken'
+  }
 }
 
 function setToken(accesstoken) {
@@ -75,6 +79,6 @@ export default function cnode(
       }
     })
     .then(json => {
-      return json.data;
+      return json.data || json;
     });
 }

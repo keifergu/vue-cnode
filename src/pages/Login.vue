@@ -1,20 +1,56 @@
 <template>
   <div class="login-container">
-    <qr-scanner />
+    <mu-flexbox-item>
+      <qr-scanner class="scanner"/>
+    </mu-flexbox-item>
+    <mu-flexbox-item>
+      <mu-text-field v-model="token" class="text" hintText="请输入你的 AccessToken "/>
+    </mu-flexbox-item>
+    <mu-flexbox-item>
+       <mu-raised-button label="登录" primary @click="login" />
+    </mu-flexbox-item>
+    <mu-flexbox-item v-if="isLogin">
+      登录成功
+    </mu-flexbox-item>
   </div>
 </template>
 
 <script>
   import QrScanner from '../components/QrScanner'
-  console.log(QrScanner)
+
   export default {
     name: 'login',
+    data() {
+      return {
+        isLogin: false,
+        loginInfo: '',
+        token: ''
+      }
+    },
+    methods: {
+      login(){
+        this.$store.dispatch("login",{
+          token: this.token
+        })
+      }
+    },
+    computed: {
+      isLogin() {
+        return this.$store.getters.isLogin
+      }
+    },
     components: { QrScanner }
   }
 </script>
 
 <style scoped>
   .login-container {
-    margin: ;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+  }
+  .text{
   }
 </style>

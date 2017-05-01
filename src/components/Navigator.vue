@@ -1,12 +1,13 @@
 <template>
   <div>
     <div class="user">
-      <mu-list-item>
-        <mu-avatar :src="user.avatar_url" @click.native="linkTo('login')"/>
-      </mu-list-item>
-      <mu-list-item>
+      <mu-list-item v-if="!isLogin" @click.native="linkTo('login')">
         <div>点击登录</div>
-    </mu-list-item>
+      </mu-list-item>
+      <mu-list-item v-else>
+        <mu-avatar :src="user.avatar_url" @click.native="linkTo('login')"/>
+        <div>{{user.loginname}}</div>
+      </mu-list-item>
     </div>
     <mu-divider />
     <mu-list-item @click="linkTo('home')">
@@ -39,15 +40,20 @@
     name: 'navigator',
     data() {
       return {
-        user: {
-          avatar_url: ''
-        }
       }
     },
     methods: {
       linkTo(path){
         this.$router.push({ path })
         this.$store.dispatch('fetchTopicList')
+      }
+    },
+    computed: {
+      user() {
+        return this.$store.getters.currentUser
+      },
+      isLogin() {
+        return this.$store.getters.isLogin
       }
     }
   }
