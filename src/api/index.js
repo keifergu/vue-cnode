@@ -2,7 +2,7 @@ import {paramsOverwrite, objectToUrl, isEmptyObject} from '../utils';
 
 const CNODE = 'https://cnodejs.org/api/v1';
 const accesstoken = 0;
-const apiConfig = {
+const apiMap = {
   topics: {
     method: 'GET',
     path: '/topics',
@@ -57,7 +57,7 @@ export default function cnode(
   } = {}
   ) {
   // 获得该API参数
-  let api = apiConfig[api_string];
+  let api = apiMap[api_string];
   // 解析URL路径
   // 如果 API 中参数为字符串则直接返回字符串
   // 如果为函数，则说明路径需要动态构造，将pathParms数组结构传入

@@ -34,18 +34,31 @@ const store = new Vuex.Store({
         avatar_url: '',
         loginname: ''
       },
-      token: storage.get("token")
+      token: storage.get("token"),
+      pageLimit: 20
     },
-    result: []
+    results: {
+      all: [],
+      home: [],
+      essence: [],
+      question: [],
+      share: [],
+      jobs: []
+    }
   },
   mutations: {
-    fetchTopicListSuccess (state, payload) {
-      const normalizeData = normalize(payload, topicList);
+    fetchTopicListSuccess (state, { topics, tab }) {
+      const normalizeData = normalize(topics, topicList);
 
       state.topics = Object.assign({}, normalizeData.entities.topics, state.topics)
       state.authors = Object.assign({}, normalizeData.entities.authors, state.authors)
-      state.result = _
-        .chain(state.result)
+      state.results[tab] = _
+        .chain(state.results[tab])
+        .concat(normalizeData.result)
+        .uniq()
+        .value()
+      state.results.all = _
+        .chain(state.results.all)
         .concat(normalizeData.result)
         .uniq()
         .value()
@@ -61,7 +74,6 @@ const store = new Vuex.Store({
       console.log(error)
     },
     loginSuccess (state, payload) {
-      console.log(payload)
       const token = payload.token
       storage.set('token', token)
       state.config.token = token
@@ -93,7 +105,7 @@ const store = new Vuex.Store({
         })
         .catch(error => commit('loginFailed', error))
     },
-    fetchTopicList ( { commit, getters }, payload) {
+    fetchTopicList ( { commit, getters, state}, payload) {
       const map = {
         home: '',
         essence: 'good',
@@ -103,12 +115,17 @@ const store = new Vuex.Store({
       }
       const tab = map[ getters.currentTab ]
       const tabObj =  tab ? {tab} : {}
-      const params = Object.assign({}, tabObj)
+      const params = Object.assign({}, tabObj, {
+        limit: state.config.pageLimit
+      })
       cnode('topics',{
         params
       })
       // TODO: 完成新建回复，抽取回复等操作,修改 api ，对空值删除
-        .then(data => commit('fetchTopicListSuccess', data))
+        .then(topics => commit('fetchTopicListSuccess', {
+          tab: getters.currentTab,
+          topics
+        }))
         .catch(error => commit('fetchTopicListFailed', error))
     },
     fetchTopics ( { commit } ) {
@@ -150,35 +167,30 @@ const store = new Vuex.Store({
       return  path ? path[1] : 'home'
     },
     currentTopicList: (state, getters) => {
-      const tab = getters.currentTab
-      return getters[ tab + 'Topics']
+      const tab = getters.currentTab,
+        results = state.results,
+        limit = state.config.pageLimit,
+        // 针对不同的 tab 有不同的过滤策略
+        filters = {
+          home: () => true,
+          essence: t => t.good,
+          jobs: t => t.tab == "job",
+          share: t => t.tab == "share",
+          question: t => t.tab == "ask",
+        }
+      // 当要获得的 tab 中没有 topic 时，说明是第一次访问该 topic
+      // 此时从所有的 topics results 中获取 page 的前几个，然后过滤
+      // 获取当前 tab 的 topic
+      if(results[tab].length === 0) {
+        const list = results.all.slice(0, limit)
+        let topics = denormalize(list, topicList, state)
+        return topics.filter(filters[tab])
+      } else {
+        return denormalize(results[tab], topicList, state)
+      }
     },
     topicsWithAuthor: state => {
-      return denormalize(state.result, topicList, state)
-    },
-    homeTopics: (state, getters) => {
-      return _.chain(getters.topicsWithAuthor)
-        .value()
-    },
-    essenceTopics: (state, getters) => {
-      return _.chain(getters.topicsWithAuthor)
-        .filter(t => t.good)
-        .value()
-    },
-    shareTopics: (state, getters) => {
-      return _.chain(getters.topicsWithAuthor)
-        .filter(t => t.tab == "share")
-        .value()
-    },
-    questionTopics: (state, getters) => {
-      return _.chain(getters.topicsWithAuthor)
-        .filter(t => t.tab == "ask")
-        .value()
-    },
-    jobsTopics: (state, getters) => {
-      return _.chain(getters.topicsWithAuthor)
-        .filter(t => t.tab == "job")
-        .value()
+      return denormalize(state.results, topicList, state)
     },
     token: (state) => {
       return state.config.token
