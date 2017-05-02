@@ -30,6 +30,13 @@ export default {
       docked: true
     };
   },
+  created() {
+    if (this.$store.getters.token) {
+      this.$store.dispatch("login")
+    } else {
+      //  TODO: Apply for login
+    }
+  },
   methods: {
     toggle(flag) {
       this.open = !this.open;

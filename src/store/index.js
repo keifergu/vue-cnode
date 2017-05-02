@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import { normalize, schema, denormalize } from 'normalizr'
 
 import cnode from '../api'
+import storage from './storage'
 
 import _ from 'lodash'
 
@@ -33,7 +34,7 @@ const store = new Vuex.Store({
         avatar_url: '',
         loginname: ''
       },
-      token: ''
+      token: storage.get("token")
     },
     result: []
   },
@@ -60,7 +61,11 @@ const store = new Vuex.Store({
       console.log(error)
     },
     loginSuccess (state, payload) {
-      state.config.user = payload
+      console.log(payload)
+      const token = payload.token
+      storage.set('token', token)
+      state.config.token = token
+      state.config.user = payload.data
     },
     loginFailed (state, error) {
       console.log(error)
@@ -74,14 +79,17 @@ const store = new Vuex.Store({
   },
   actions: {
     login( { commit, getters, state }, payload) {
+      const token = payload && payload.token ? payload.token : getters.token
       cnode("login", {
         params: {
-          accesstoken: payload.token
+          accesstoken: token
         }
       })
         .then(data => {
-          commit('loginSuccess', data)
-          state.config.token = payload.token
+          commit('loginSuccess', {
+            data,
+            token
+          })
         })
         .catch(error => commit('loginFailed', error))
     },

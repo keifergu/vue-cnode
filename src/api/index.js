@@ -76,7 +76,8 @@ export default function cnode(
     .then(response => response.json())
     .then(json => {
       if (json.success) {
-        return json.data;
+        delete json.success;
+        return json.data || json;
       } else {
         throw new Error(json.error_msg)
       }
