@@ -34,8 +34,7 @@
           </div>
         </mu-paper>
         <mu-paper class="editor-box">
-          <reply-editor class="editor"/>
-          <mu-raised-button label="发表新评论" primary @click="login" />
+          <reply-editor />
         </mu-paper>
       </div>
     </transition>

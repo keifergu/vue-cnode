@@ -64,7 +64,13 @@ const store = new Vuex.Store({
     },
     loginFailed (state, error) {
       console.log(error)
-    }
+    },
+    createReplySuccess (state, error) {
+      console.log(error)
+    },
+    createReplyFailed (state, error) {
+      console.log(error)
+    },
   },
   actions: {
     login( { commit, getters, state }, payload) {
@@ -115,7 +121,6 @@ const store = new Vuex.Store({
         params: {
           accesstoken: getters.token,
           content: payload.content,
-          reply_id: payload.reply_id
         },
         pathParams: [ getters.currentTopicId ]
       })

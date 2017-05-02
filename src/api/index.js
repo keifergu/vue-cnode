@@ -22,7 +22,7 @@ const apiConfig = {
     path: (loginname) => `/user/${loginname}`,
     params: {},
   },
-  new_reply: {
+  create_reply: {
     method: 'POST',
     path: (topic_id) => `/topic/${topic_id}/replies`,
     params: {

@@ -1,8 +1,11 @@
 <template>
-  <quill-editor v-model="content"
-                :options="editorOption"
-                @change="onEditorChange($event)">
-  </quill-editor>
+  <div>
+    <quill-editor v-model="content"
+                  :options="editorOption"
+                  @change="onEditorChange($event)">
+    </quill-editor>
+    <mu-raised-button label="发表新评论" primary @click="postReply" />
+  </div>
 </template>
 
 <script>
@@ -28,6 +31,11 @@
     methods: {
       onEditorChange(e) {
         console.log(e)
+      },
+      postReply() {
+        this.$store.dispatch("createReply", {
+          content: this.content
+        })
       }
     }
   }
