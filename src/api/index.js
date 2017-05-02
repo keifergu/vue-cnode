@@ -73,12 +73,12 @@ export default function cnode(
   };
 
   return fetch(fullURL, fetchConf)
-    .then(response => {
-      if (response.ok) {
-        return response.json();
-      }
-    })
+    .then(response => response.json())
     .then(json => {
-      return json.data || json;
+      if (json.success) {
+        return json.data;
+      } else {
+        throw new Error(json.error_msg)
+      }
     });
 }
