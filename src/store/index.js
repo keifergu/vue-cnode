@@ -113,15 +113,23 @@ const store = new Vuex.Store({
         share: 'share',
         jobs: 'job'
       }
+      // 获取当前的 tab
       const tab = map[ getters.currentTab ]
       const tabObj =  tab ? {tab} : {}
-      const params = Object.assign({}, tabObj, {
+
+      // 判断是否是下一页，计算页数
+      let page = 1
+      if (payload && payload.next) {
+        page = getters.currentPage + 1
+      }
+      let params = Object.assign({}, tabObj, {
+        page,
         limit: state.config.pageLimit
       })
+
       cnode('topics',{
         params
       })
-      // TODO: 完成新建回复，抽取回复等操作,修改 api ，对空值删除
         .then(topics => commit('fetchTopicListSuccess', {
           tab: getters.currentTab,
           topics
@@ -189,8 +197,11 @@ const store = new Vuex.Store({
         return denormalize(results[tab], topicList, state)
       }
     },
-    topicsWithAuthor: state => {
-      return denormalize(state.results, topicList, state)
+    currentPage: (state, getters) => {
+      const tab = getters.currentTab;
+      const tabResults = state.results[tab],
+        limit = state.config.pageLimit;
+      return tabResults.length / limit;
     },
     token: (state) => {
       return state.config.token

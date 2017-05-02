@@ -6,24 +6,33 @@
 
 <script>
   import TopicList from '../components/TopicList/index'
+  import { mapGetters, mapState } from 'vuex'
 
   export default {
     name: 'home',
     data() {
       return {
-        container: ''
+        container: '',
+        fetchStatus: true
       }
     },
     created() {
-      this.fetchData()
+      this.fetchData({next: false})
     },
     methods: {
-      fetchData(){
-        this.$store.dispatch("fetchTopicList")
+      fetchData({next}){
+        this.$store.dispatch("fetchTopicList", {
+          next
+        })
       },
       listScroll() {
         var distance = this.container.getBoundingClientRect().bottom - window.innerHeight;
-        console.log(distance)
+        if (distance < 200 && this.fetchStatus) {
+          this.fetchStatus = false
+          this.fetchData( {next: true} )
+        } else if (distance > 200) {
+          this.fetchStatus = true
+        }
       }
     },
     mounted() {
@@ -31,9 +40,9 @@
       window.addEventListener("scroll", this.listScroll)
     },
     computed: {
-      topics(){
-        return this.$store.getters.currentTopicList
-      }
+      ...mapGetters({
+        topics: 'currentTopicList'
+      }),
     },
     components: { TopicList }
   }
