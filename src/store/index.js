@@ -82,11 +82,16 @@ const store = new Vuex.Store({
     loginFailed (state, error) {
       console.log(error)
     },
-    createReplySuccess (state, error) {
-      console.log(error)
+    createReplySuccess (state, payload) {
+      console.log(payload)
     },
-    createReplyFailed (state, error) {
+    createReplyFailed (state, { error, topicId }) {
       console.log(error)
+      state.topics[topicId].replies.pop()
+    },
+    optimismUpdateReply(state, payload) {
+      const { topic, content } = payload
+      state.topics[topic].replies.push(content)
     },
   },
   actions: {
@@ -149,16 +154,27 @@ const store = new Vuex.Store({
         .then(data => commit('fetchTopicSuccess', data))
         .catch(error => commit('fetchTopicFailed', error))
     },
-    createReply ({ commit, getters }, payload) {
+    createReply ({ commit, getters, state}, payload) {
+      const topicId = getters.currentTopicId
+      const { content } = payload
+
+      commit('optimismUpdateReply', {
+        topicId,
+        content,
+      })
+
       cnode("create_reply", {
         params: {
-          accesstoken: getters.token,
-          content: payload.content,
+          content,
+          accesstoken: getters.token
         },
-        pathParams: [ getters.currentTopicId ]
+        pathParams: [ topicId ]
       })
         .then(data => commit('createReplySuccess', data))
-        .catch(error => commit('createReplyFailed', error))
+        .catch(error => commit('createReplyFailed', {
+          error,
+          topicId
+        }))
     }
   },
   getters: {

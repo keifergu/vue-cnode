@@ -83,19 +83,24 @@ export default function cnode(
       body,
     });
 
-    console.log(fetchConf)
   } else if (api.method == 'GET') {
     fullURL = CNODE + path + '?' + objectToUrl(fullParams);
   }
 
   return fetch(fullURL, fetchConf)
-    .then(response => response.json())
+    .then(response => {
+      const type = response.headers.get("content-type")
+      if( type.indexOf("application/json") !== -1)
+        return response.json()
+      else
+        return Promise.reject("Expect 'application/json', but get: " + type)
+    })
     .then(json => {
       if (json.success) {
         delete json.success;
         return json.data || json;
       } else {
-        throw new Error(json.error_msg)
+        return Promise.reject(json.error_msg)
       }
     });
 }

@@ -4,7 +4,7 @@
                   :options="editorOption"
                   @change="onEditorChange($event)">
     </quill-editor>
-    <mu-raised-button label="发表新评论" primary @click="postReply" />
+    <mu-raised-button label="发表新评论" primary @click="postReply" class="btn-reply"/>
   </div>
 </template>
 
@@ -40,3 +40,10 @@
     }
   }
 </script>
+
+<style scoped>
+  .btn-reply {
+    margin-top: 5px;
+    float: right;
+  }
+</style>

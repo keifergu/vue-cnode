@@ -1,10 +1,10 @@
 <template>
   <div class="topic-container">
-    <div v-show="loading">
+    <div v-if="loading">
       loading...
     </div>
     <transition name="fade">
-      <div v-show="!loading">
+      <div v-if="!loading">
         <!-- 文章内容 -->
         <mu-paper class="paper-content">
           <div class="title">
@@ -90,7 +90,7 @@
     top: 5px;
   }
   .reply-title {
-    margin-left: 10px;
+    margin: 0 0 10px 10px;
   }
   .title {
     font-size: 20px;
