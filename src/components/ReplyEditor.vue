@@ -30,7 +30,7 @@
     },
     methods: {
       onEditorChange(e) {
-        console.log(e)
+        // console.log(e)
       },
       postReply() {
         this.$store.dispatch("createReply", {

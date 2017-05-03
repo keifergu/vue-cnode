@@ -1,7 +1,7 @@
 import {paramsOverwrite, objectToUrl, isEmptyObject} from '../utils';
 
 const CNODE = 'https://cnodejs.org/api/v1';
-const accesstoken = 0;
+
 const apiMap = {
   topics: {
     method: 'GET',
@@ -24,10 +24,7 @@ const apiMap = {
   },
   create_reply: {
     method: 'POST',
-    path: (topic_id) => `/topic/${topic_id}/replies`,
-    params: {
-      accesstoken: accesstoken
-    }
+    path: (topic_id) => `/topic/${topic_id}/replies`
   },
   login: {
     method: 'POST',
@@ -66,11 +63,30 @@ export default function cnode(
   // 使用自定以的参数覆盖默认参数
   let fullParams = Object.assign({},api.params, params);
   // 获得完整的URL,如果是GET方法，则将参数附加在url之后，POST方法则在后面处理
-  let fullURL = CNODE + path + '?' + objectToUrl(fullParams);
-
+  let fullURL = ''
   let fetchConf = {
     method: api.method
   };
+
+  if (api.method == 'POST') {
+    let body = JSON.stringify(fullParams);
+
+    let headers = new Headers({
+      "Content-Type": "application/json",
+      "Content-Length": body.length.toString(),
+    });
+
+    fullURL = CNODE + path;
+
+    fetchConf = Object.assign(fetchConf, {
+      headers,
+      body,
+    });
+
+    console.log(fetchConf)
+  } else if (api.method == 'GET') {
+    fullURL = CNODE + path + '?' + objectToUrl(fullParams);
+  }
 
   return fetch(fullURL, fetchConf)
     .then(response => response.json())
