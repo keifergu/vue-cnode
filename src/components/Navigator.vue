@@ -4,8 +4,8 @@
       <mu-list-item v-if="!isLogin" @click.native="linkTo('login')">
         <div>点击登录</div>
       </mu-list-item>
-      <mu-list-item v-else>
-        <mu-avatar :src="user.avatar_url" @click.native="linkTo('login')"/>
+      <mu-list-item v-else @click.native="linkToUser">
+        <mu-avatar :src="user.avatar_url" />
         <div>{{user.loginname}}</div>
       </mu-list-item>
     </div>
@@ -46,6 +46,11 @@
       linkTo(path){
         this.$router.push({ path })
         this.$store.dispatch('fetchTopicList')
+      },
+      linkToUser() {
+        this.$router.push({
+          path: 'user/' + this.user.loginname
+        })
       }
     },
     computed: {

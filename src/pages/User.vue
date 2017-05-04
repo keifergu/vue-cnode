@@ -1,38 +1,27 @@
 <template>
-  <div class="container">
+  <div class="user-container">
     <div v-if="loading">
       loading...
     </div>
     <div v-else>
       <mu-card>
-        <mu-card-header :title="user.loginname" :subTitle="user.score">
+        <mu-card-header :title="user.loginname" :subTitle="user.score.toString()">
           <mu-avatar :src="user.avatar_url" slot="avatar"/>
         </mu-card-header>
       </mu-card>
+
       <div class="reply">
-        <mu-paper>
-          <mu-content-block v-for="reply in user.recent_replies">
-            <topic-list-item
-              :topicId="reply.id"
-              :top="reply.top"
-              :title="reply.title"
-              :author="reply.author"
-            />
-          </mu-content-block>
-        </mu-paper>
+        <div class="title">最近回复：</div>
+        <TopicList
+          :topics = "user.recent_replies"
+        />
       </div>
 
       <div class="topic">
-        <mu-paper>
-          <mu-content-block v-for="topic in user.recent_topics">
-            <topic-list-item
-              :topicId="topic.id"
-              :top="topic.top"
-              :title="topic.title"
-              :author="topic.author"
-            />
-          </mu-content-block>
-        </mu-paper>
+      <div class="title">最近的话题：</div>
+        <TopicList
+          :topics = "user.recent_topics"
+        />
       </div>
 
     </div>
@@ -41,19 +30,18 @@
 
 <script>
   import cnode from '../api';
-  import TopicListItem from '../components/TopicList/TopicListItem';
+  import TopicList from '../components/TopicList';
 
   export default {
     name: 'user',
     data() {
       return {
-        user: '',
+        user: {},
         loading: true,
       };
     },
     created() {
       this.fetchUserInfo().then(data => {
-          console.log(data)
           this.user = data;
           this.loading = false;
         })
@@ -66,13 +54,17 @@
         });
       }
     },
-    components: { TopicListItem }
+    components: { TopicList }
   };
 </script>
 
 <style scoped>
-  .container {
+  .user-container {
     padding-top: 5px;
+  }
+  .title {
+    margin: 15px 0 5px 5px;
+    font-size: 16px;
   }
   .reply {
     margin-top: 5px;
