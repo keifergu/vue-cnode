@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <mu-flexbox-item>
-      <qr-scanner class="scanner"/>
+      <qr-scanner class="scanner" @success="scannerData"/>
     </mu-flexbox-item>
     <mu-flexbox-item>
       <mu-text-field v-model="token" class="text" hintText="请输入你的 AccessToken "/>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import QrScanner from '../components/QrScanner'
+  import QrScanner from '../components/QrScanner/'
 
   export default {
     name: 'login',
@@ -31,6 +31,11 @@
         this.$store.dispatch("login",{
           token: this.token
         })
+      },
+      scannerData(payload) {
+        console.log(payload)
+        this.token = payload
+        this.login()
       }
     },
     computed: {

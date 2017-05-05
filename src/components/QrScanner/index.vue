@@ -1,10 +1,17 @@
 <template>
-  <div>
-    <video id="video" @canplay.native="setVideo">Video stream not available.</video>
+  <div class="video-container">
+    <video id="video" @canplay.native="setVideo" class="tvideo">
+      Video stream not available.
+    </video>
+    <canvas id="canvas" class="tcanvas"></canvas>
   </div>
 </template>
 
 <script>
+  import jsqrcode from './jsqrcode/src/qrcode.js'
+
+  let qrcode = jsqrcode();
+
   var width = 320;
   var height = 0;
   var streaming = false;
@@ -35,16 +42,17 @@
               console.log("An error occured! " + err);
           }
       );
+
+      this.interval()
+    },
+    data() {
+      return {
+        canvas: document.createElement("canvas")
+      }
     },
     computed: {
       video() {
         return document.getElementById('video')
-      },
-      canvas() {
-        return document.getElementById('canvas')
-      },
-      photo() {
-        return document.getElementById('photo')
       }
     },
     methods: {
@@ -70,39 +78,45 @@
         }
       },
       takePicture() {
-        var canvas = this.canvas;
+        var that = this;
+        var canvas = that.canvas;
+        var video = that.video;
         var context = canvas.getContext('2d');
-        if (width && height) {
-            canvas.width = width;
-            canvas.height = height;
-            context.drawImage(this.video, 0, 0, width, height);
-
-            var data = canvas.toDataURL('image/png');
-
-            var image = new Image()
-            image.src = data;
-            image.onload = function(){
-                try {
-                    console.log(qrcode.decode(image));
-                } catch(e){
-                    console.log(e);
-                }
-
-            }
-            this.photo.setAttribute('src', data);
-        } else {
-            this.clearphoto();
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(that.video, 0, 0, canvas.width, canvas.height);
+        var data = canvas.toDataURL('image/png');
+        var image = new Image();
+        image.src = data;
+        image.onload = function(){
+          try {
+            var scanString = qrcode.decode(image);
+            that.$emit("success", scanString);
+          } catch (e) {
+            console.log(e.message)
+          }
         }
       },
-      clearPhoto() {
-        var canvas = this.canvas;
-        var context = canvas.getContext('2d');
-        context.fillStyle = "#AAA";
-        context.fillRect(0, 0, canvas.width, canvas.height);
-
-        var data = canvas.toDataURL('image/png');
-        this.photo.setAttribute('src', data);
+      interval() {
+        var _takePic = this.takePicture.bind(this);
+        setInterval(_takePic, 3000)
       }
     }
   }
 </script>
+
+<style>
+ .video-container {
+  position: relative;
+ }
+
+ .tvideo {
+  margin: 0 5px;
+  max-width: 100%;
+ }
+
+ .tcanvas {
+  position: absolute;
+  visibility: false;
+ }
+</style>
