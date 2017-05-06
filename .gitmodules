@@ -1,0 +1,3 @@
+[submodule "src/components/QrScanner/qrcode"]
+	path = src/components/QrScanner/qrcode
+	url = git@github.com:keifergu/jsqrcode.git

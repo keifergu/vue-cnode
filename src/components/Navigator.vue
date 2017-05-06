@@ -10,23 +10,23 @@
       </mu-list-item>
     </div>
     <mu-divider />
-    <mu-list-item @click="linkTo('home')">
+    <mu-list-item @click="linkTo('/home')">
       <mu-icon slot="left" value="home"/>
       <router-link to="/home">首页</router-link>
     </mu-list-item>
-    <mu-list-item @click="linkTo('essence')">
+    <mu-list-item @click="linkTo('/essence')">
       <mu-icon slot="left" value="thumb_up"/>
       <router-link to="/essence">精华</router-link>
     </mu-list-item>
-    <mu-list-item @click="linkTo('question')">
+    <mu-list-item @click="linkTo('/question')">
       <mu-icon slot="left" value="question_answer"/>
       <router-link to="/question">问答</router-link>
     </mu-list-item>
-    <mu-list-item @click="linkTo('share')">
+    <mu-list-item @click="linkTo('/share')">
       <mu-icon slot="left" value="supervisor_account"/>
       <router-link to="/share">分享</router-link>
     </mu-list-item>
-    <mu-list-item @click="linkTo('jobs')">
+    <mu-list-item @click="linkTo('/jobs')">
       <mu-icon slot="left" value="work"/>
       <router-link to="/jobs">工作</router-link>
     </mu-list-item>
@@ -49,7 +49,7 @@
       },
       linkToUser() {
         this.$router.push({
-          path: 'user/' + this.user.loginname
+          path: '/user/' + this.user.loginname
         })
       }
     },

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-  import jsqrcode from './jsqrcode/src/qrcode.js'
+  import jsqrcode from './qrcode/src/qrcode.js'
 
   let qrcode = jsqrcode();
 
@@ -19,35 +19,18 @@
   export default {
     name: 'qr-scanner',
     mounted() {
-      var video = this.video;
-      navigator.getMedia = (navigator.getUserMedia ||
-                  navigator.webkitGetUserMedia ||
-                  navigator.mozGetUserMedia ||
-                  navigator.msGetUserMedia);
-
-      navigator.getMedia({
-              video: true,
-              audio: false
-          },
-          function (stream) {
-              if (navigator.mozGetUserMedia) {
-                  video.mozSrcObject = stream;
-              } else {
-                  var vendorURL = window.URL || window.webkitURL;
-                  video.src = vendorURL.createObjectURL(stream);
-              }
-              video.play();
-          },
-          function (err) {
-              console.log("An error occured! " + err);
-          }
-      );
-
+      this.initVideoStream()
       this.interval()
+    },
+    beforeDestroy() {
+      console.log(this.intervalId)
+      window.clearInterval(this.intervalId);
     },
     data() {
       return {
-        canvas: document.createElement("canvas")
+        canvas: document.createElement("canvas"),
+        image: new Image(),
+        intervalId: ''
       }
     },
     computed: {
@@ -81,12 +64,12 @@
         var that = this;
         var canvas = that.canvas;
         var video = that.video;
+        var image = that.image;
         var context = canvas.getContext('2d');
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         context.drawImage(that.video, 0, 0, canvas.width, canvas.height);
         var data = canvas.toDataURL('image/png');
-        var image = new Image();
         image.src = data;
         image.onload = function(){
           try {
@@ -97,9 +80,35 @@
           }
         }
       },
+      initVideoStream() {
+        var video = this.video;
+
+        navigator.getMedia = (navigator.getUserMedia ||
+                    navigator.webkitGetUserMedia ||
+                    navigator.mozGetUserMedia ||
+                    navigator.msGetUserMedia);
+
+        navigator.getMedia({
+          video: { facingMode: { exact: "environment" } }, // 优先使用后置摄像头
+          audio: false
+          },
+          function (stream) {
+              if (navigator.mozGetUserMedia) {
+                  video.mozSrcObject = stream;
+              } else {
+                  var vendorURL = window.URL || window.webkitURL;
+                  video.src = vendorURL.createObjectURL(stream);
+              }
+              video.play();
+          },
+          function (err) {
+              console.log("An error occured! " + err);
+          }
+        );
+      },
       interval() {
         var _takePic = this.takePicture.bind(this);
-        setInterval(_takePic, 3000)
+        this.intervalId = setInterval(_takePic, 3000);
       }
     }
   }
