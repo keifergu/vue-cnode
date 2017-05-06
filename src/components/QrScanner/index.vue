@@ -1,9 +1,8 @@
 <template>
   <div class="video-container">
-    <video id="video" @canplay.native="setVideo" class="tvideo">
+    <video id="video" class="tvideo">
       Video stream not available.
     </video>
-    <canvas id="canvas" class="tcanvas"></canvas>
   </div>
 </template>
 
@@ -21,16 +20,17 @@
     mounted() {
       this.initVideoStream()
       this.interval()
+      this.video.addEventListener("canplay", this.setvideo)
     },
     beforeDestroy() {
-      console.log(this.intervalId)
       window.clearInterval(this.intervalId);
     },
     data() {
       return {
         canvas: document.createElement("canvas"),
         image: new Image(),
-        intervalId: ''
+        intervalId: '',
+        front: false
       }
     },
     computed: {
@@ -115,17 +115,12 @@
 </script>
 
 <style>
- .video-container {
+  .video-container {
   position: relative;
- }
+  }
 
- .tvideo {
+  .tvideo {
   margin: 0 5px;
   max-width: 100%;
- }
-
- .tcanvas {
-  position: absolute;
-  visibility: false;
- }
+  }
 </style>
