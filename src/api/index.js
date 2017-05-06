@@ -1,4 +1,5 @@
 import {paramsOverwrite, objectToUrl, isEmptyObject} from '../utils';
+import 'whatwg-fetch';
 
 const CNODE = 'https://cnodejs.org/api/v1';
 

@@ -20,7 +20,8 @@
     mounted() {
       this.initVideoStream()
       this.interval()
-      this.video.addEventListener("canplay", this.setvideo)
+      var _setVideo = this.setVideo.bind(this)
+      this.video.addEventListener("canplay", _setVideo)
     },
     beforeDestroy() {
       window.clearInterval(this.intervalId);
@@ -30,7 +31,7 @@
         canvas: document.createElement("canvas"),
         image: new Image(),
         intervalId: '',
-        front: false
+        options: true
       }
     },
     computed: {
@@ -70,6 +71,7 @@
         canvas.height = video.videoHeight;
         context.drawImage(that.video, 0, 0, canvas.width, canvas.height);
         var data = canvas.toDataURL('image/png');
+        var image = new Image();
         image.src = data;
         image.onload = function(){
           try {
@@ -80,8 +82,39 @@
           }
         }
       },
+      getDevices() {
+        var options = true;
+        if(navigator.mediaDevices && navigator.mediaDevices.enumerateDevices)
+        {
+          try{
+            navigator.mediaDevices.enumerateDevices()
+            .then(function(devices) {
+              devices.forEach(function(device) {
+              if (device.kind === 'videoinput') {
+                if(device.label.toLowerCase().search("back") >-1)
+                options={'deviceId': {'exact':device.deviceId}, 'facingMode':'environment'} ;
+              }
+              console.log(device.kind + ": " + device.label +" id = " + device.deviceId);
+              });
+            });
+          }
+          catch(e)
+          {
+            console.log(e);
+          }
+        }
+        else{
+          console.log("no navigator.mediaDevices.enumerateDevices" );
+        }
+
+        this.options = options;
+      },
       initVideoStream() {
+
+        this.getDevices();
+
         var video = this.video;
+        var options = this.options;
 
         navigator.getMedia = (navigator.getUserMedia ||
                     navigator.webkitGetUserMedia ||
@@ -89,7 +122,7 @@
                     navigator.msGetUserMedia);
 
         navigator.getMedia({
-          video: { facingMode: { exact: "environment" } }, // 优先使用后置摄像头
+          video: options,
           audio: false
           },
           function (stream) {
